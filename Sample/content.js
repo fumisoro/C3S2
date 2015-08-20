@@ -8,16 +8,27 @@ $(function() {
 	//  })
 
 	$("*")
-		.mouseover(function() {
+		.on('mouseover', '*', function() {
 			var container = this.firstChild;
-			$(container).css('background', 'blue');
-			console.log(container);
+			var attr = this.attributes;
+			$(container).css('backgroundColor', 'blue');
+			console.log(typeof(container));
+			// console.log(attr);
 		})
-		.mouseout(function() {
+		.on('mouseout', '*', function() {
 			var container = this.firstChild;
-			$(container).css('background', '');
+			$(container).css('backgroundColor', '');
 			console.log("あうとーー");
 		})
+
+		$('p')
+			.mouseover( function() {
+				$(this).css('backgroundColor', 'blue');
+			})
+			.mouseout( function() {
+				$(this).css('backgroundColor', '');
+			});
+
 
 
 
