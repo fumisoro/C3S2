@@ -1,14 +1,4 @@
-/*
-var btn = $('<button>').text('change')
-$('body').append(btn)
-$('body').on('click', 'button', function(){
-    document.body.style.backgroundColor="red";
-})
-
-    //$(this).remove()
-
-// $('body').remove();
-*/
+$("body").wrapInner("<div id='wrapBody'></div>");
 
 var div= $("<div id='C3S2menu'></div>");
 var list = $("<ul>");
@@ -29,38 +19,27 @@ $("#closeMenu").click(function(){
 
 //テンプレート機能
 $("#list1").click(function(){
-    document.body.style.backgroundColor="red";
-    document.body.style.fontWeight='bold';
-    document.body.style.fontStyle='italic';
-    document.body.style.fontSize='24px';
-    document.body.style.color="";
+    $("#wrapBody").css("background-color", "red")
+		  .css("font-size", "24px")
+		  .css("font-weight", "bold")
+		  .css("font-style", "italic")
+		  .css("color", "");
 });
 
 $("#list2").click(function(){
-    document.body.style.backgroundColor="black";
-    document.body.style.fontWeight="";
-    document.body.style.fontStyle="";
-    document.body.style.fontSize='24px';
-    document.body.style.color='yellow';
+    $("#wrapBody").css("background-color", "black")
+		  .css("font-size", "24px")
+		  .css("font-weight", "")
+		  .css("font-style", "")
+		  .css("color", "yellow");
 });
-
+//元に戻す
 $("#list3").click(function(){
-    document.body.style.backgroundColor="";
-    document.body.style.fontWeight="";
-    document.body.style.fontStyle="";
-    document.body.style.fontSize="";
-    document.body.style.color="";
+    $("#wrapBody").css("background-color", "")
+		  .css("font-size", "")
+		  .css("font-weight", "")
+		  .css("font-style", "")
+		  .css("color", "");
 });
 
-/*
-function changeTemplate(num){
-    switch (num){
-	case 1:
-	    document.body.style.backgroundColor="red";
-	    document.body.style.fontWeight='bold';
-	    document.body.style.fontStyle='italic';
-	    document.body.style.fontSize='24px';
-	    break;
-    }
-}
-*/
+
