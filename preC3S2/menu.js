@@ -1,39 +1,64 @@
 $("body").wrapInner("<div id='wrapBody'></div>");
 
-var div= $("<div id='C3S2menu'></div>");
-var tabs= $("<div id='tabs'></div>");
+//var C3S2menu= $("<div>").attr("id", "C3S2menu");
+
+var tabs= $("<div>").attr("id", "tabs");
 var tablist= $("<ul>");
 tablist.append("<li><a href='#template'>テンプレート</a></li>");
 tablist.append("<li><a href='#individual_setting'>個別設定</a></li>");
 tablist.append("<li><a href='#css_writing'>CSS記述</a></li>");
 tabs.append(tablist);
 
-var template= $("<div id='template'></div>");
+var template= $("<div>").attr("id", "template");
 template.append("<li><button id='list1'>テンプレート１</button></li>");
 template.append("<li><button id='list2'>テンプレート2</button></li>");
 template.append("<li><button id='list3'>元に戻す</button></li>");
 tabs.append(template);
 
-var i_setting= $("<div id='individual_setting'></div>");
+var i_setting= $("<div>").attr("id", "individual_setting");
 i_setting.append("<p>個別設定の内容</p>");
 tabs.append(i_setting);
 
-var css_writing= $("<div id='css_writing'></div>");
-css_writing.append("<textarea name='inputCSS' cols='200' rows='5', style='overflow:auto;'></textarea>");
+var css_writing= $("<div>").attr("id", "css_writing");
+var inputCSS= $("<textarea>").attr("name", "inputCSS")
+			     .attr("cols", "200")
+			     .attr("rows", "5")
+			     .css("width", "90%")
+			     .css("overflow", "auto");
+css_writing.append(inputCSS);
 css_writing.append("<button>change</button>");
 tabs.append(css_writing);
 
-div.append(tabs);
-div.append("<button id='closeMenu', style='position: absolute; right: 0px; top: 0px'>閉じる</button>")
+//C3S2menu.append(tabs);
+var closeButton= $("<button>").attr("id", "closeMenu")
+			      .css("position", "absolute")
+			      .css("right", "2%")
+			      .css("top","4%")
+			      .text("閉じる");
+//C3S2menu.append(closeButton);
+tabs.append(closeButton);
 
-$("body").append(div);
-$('#C3S2menu').css({backgroundColor: '#ffd67b', position: 'fixed', width: window.outerWidth-16, top: window.outerHeight-300, border: 'solid', align: 'center', margin: 0});
+//$("body").append(C3S2menu);
+$("body").append(tabs);
+$("body").css("margin", "0");
+//$('#C3S2menu').css("position", "fixed")
+$('#tabs').css("position", "fixed")
+	      .css("width", "100%")
+	      .css("height", "34%")
+	      .css("top", "65%")
+	      .css("border", "solid")
+	      .css("align", "center")
+	      .css("margin", "0")
+	      .css("overflow", "scroll")
+	      .css("z-index", 0x7FFFFFFF);
 
 $("#closeMenu").click(function(){
-    $("#C3S2menu").remove();
+    //$("#C3S2menu").remove();
+    $("#tabs").remove();
+    $("body").css("margin", "");
 });
 
-$('#tabs').tabs({ heightStyle: 'content' });
+$('#tabs').tabs({ heightStyle: 'auto' });
 
 
 //テンプレート機能
@@ -52,7 +77,7 @@ $("#list2").click(function(){
 		  .css("font-style", "")
 		  .css("color", "yellow");
 });
-//元に戻す
+
 $("#list3").click(function(){
     $("#wrapBody").css("background-color", "")
 		  .css("font-size", "")
