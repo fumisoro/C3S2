@@ -19,7 +19,7 @@ $(function() {
 		.on('mouseout', '*', function() {
 			var container = this.firstChild;
 			$(container).css('backgroundColor', '');
-			console.log("あうとーー");
+			//console.log("あうとーー");
 		})
 
 		$('p')

@@ -1,5 +1,5 @@
 {
-    "name": "Test1",
+    "name": "PreC3S2",
     "version": "0.1",
     "manifest_version": 2,
     
@@ -13,7 +13,7 @@
     
     "browser_action": {
         "default_icon": "icon48.png",
-        "default_title": "Test1"
+        "default_title": "PreC3S2"
     },
     
     "background": {
@@ -23,8 +23,8 @@
     "content_scripts":[
     {
         "matches": ["<all_urls>"],
-        "css": ["jquery-ui.min.css"],
-        "js": ["jquery.js","jquery-ui.min.js","content.js"]
+        "css": ["jquery-ui.min.css","spectrum.css"],
+        "js": ["jquery.js","jquery-ui.min.js","spectrum.js","content.js"]
     }
     ]
 }
