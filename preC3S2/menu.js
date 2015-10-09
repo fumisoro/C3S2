@@ -62,6 +62,15 @@ $('#tabs').css("position", "fixed")
 
 $("#closeMenu").click(function(){
     //$("#C3S2menu").remove();
+    selectable = false;
+    selected = false;
+    $(targetElement).css("border", "");
+    targetElement = null;
+    $("[change!='true']").css({
+	opacity: "",
+	background: "",
+	zIndex: ""
+    });
     $("#tabs").remove();
     $("body").css("margin", "");
 });
@@ -135,6 +144,7 @@ $('#backColor').spectrum({
 	if (selected) {
 	    $(targetElement).css("background-color", backColor);
 	    $(targetElement).find("p").css("background-color", backColor);
+	    $(targetElement).attr("data", backColor).attr("change", true);
 	}
     }
 });
@@ -184,22 +194,6 @@ var selectable = false;
 var selected = false;
 var targetElement = null;
 
-/*
-$("#is_start").click(function(){
-    selectable = true;
-    $("#wrapBody *").hover(
-	function(eo) {
-	    var overT = eo.currentTarget;
-	    $(overT).css("border", "3px solid #ff0000");
-	    //console.log(eo.target);
-	},
-	function(eo) {
-	    var outT = eo.currentTarget;
-	    $(outT).css('border', '');
-	}
-    );
-});
-*/
 //要素の選択
 $("#tab_is").click(function(){
     selectable = true;
@@ -212,29 +206,30 @@ var select = function(){
     $("#wrapBody *").mouseover(
 	function(eo) {
 	    var overT = eo.target;
+	    var outT = eo.relatedTarget
+	    var colorValue = null;
+	    if ($(outT).attr("data")){
+		colorValue = $(outT).attr("data");
+	    }
 	    if (selectable) {
 		$(overT).css({
 		    opacity: "0.6",
 		    background: "#9ef",
 		    zIndex: "0x7FFFFFFE"
 		});
-		$(eo.relatedTarget).css({
-		    opacity: "",
-		    background: "",
-		    zIndex: ""
-		});
-	    }else{
-		$(overT).css({
-		    opacity: "",
-		    background: "",
-		    zIndex: ""
-		});
-		$(eo.relatedTarget).css({
-		    opacity: "",
-		    background: "",
-		    zIndex: ""
-		});
-		
+		if (colorValue) {
+		    $(outT).css({
+			opacity: "",
+			background: colorValue,
+			zIndex: ""
+		    });
+		}else{
+		    $(outT).css({
+			opacity: "",
+			background: "",
+			zIndex: ""
+		    });
+		}
 	    }
 	}
     );
@@ -242,6 +237,15 @@ var select = function(){
 
 $("#tab_template, #tab_css").click(function(){
     selectable = false;
+    if (selected) {
+	$(targetElement).css("border", "");
+    }
+    $("[change!='true']").css({
+	opacity: "",
+	background: "",
+	zIndex: ""
+	}
+    );
 });
 
 //選択する要素の決定
@@ -258,7 +262,6 @@ $("#wrapBody").click(function(event){
 })
 //非表示
 $("#is_hide").click(function(){
-    console.log("ok");
     if (selected) {
 	$(targetElement).hide();
     }
