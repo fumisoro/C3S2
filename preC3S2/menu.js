@@ -19,10 +19,12 @@ tabs.append(template);
 
 //個別設定
 var i_setting= $("<div>").attr("id", "individual_setting");
-i_setting.append("<p>個別設定の内容</p>");
 i_setting.append("<button id='is_hide'>非表示</button>");
+//i_setting.append("<span>A</span>");
+//var sliderwrap.append("<span>A</span>");
 var slider = $("<div>").attr("id", "slider").css("width", "300px");
 i_setting.append(slider);
+//i_setting.append("<span>A</span>");
 var fontColor = $("<input>").attr("id", "fontColor").attr("type", "text");
 i_setting.append(fontColor);
 var backColor = $("<input>").attr("id", "backColor").attr("type", "text");
@@ -74,7 +76,8 @@ $("#tabs").css({
     align: "center",
     margin: "0",
     overflow: "scroll",
-    zIndex: 0x7FFFFFFF
+    zIndex: 0x7FFFFFFF,
+    background: ""
 });
 
 //個別設定
@@ -109,11 +112,11 @@ $('#slider').slider({
     step: 0.5,
     value: 1,
     slide: function(e, ui) {
-	if (elementSelected) {
-	    prevStyle = $(targetElement).attr('style');
-	    $(targetElement).css({'cssText': prevStyle + 'font-size: ' +ui.value+'px !important;'});
-	    //$(targetElement).css("font-size", ui.value);
-	}
+		if (elementSelected) {
+		    prevStyle = $(targetElement).attr('style');
+		    $(targetElement).css({'cssText': prevStyle + 'font-size: ' +ui.value+'px !important;'});
+		    //$(targetElement).css("font-size", ui.value);
+		}
     }
 });
 
@@ -131,16 +134,16 @@ $('#fontColor').spectrum({
         ["#900","#b45f06","#bf9000","#38761d","#134f5c","#0b5394","#351c75","#741b47"],
         ["#600","#783f04","#7f6000","#274e13","#0c343d","#073763","#20124d","#4c1130"]
     ],
-    change: function(color) {
-	var fontColor = color.toHexString();
-	console.log(fontColor);
-	if (elementSelected) {
-	    prevStyle = $(targetElement).attr('style');
-	    $(targetElement).css({'cssText': prevStyle + 'color: ' +fontColor+' !important;'});
-	    $(targetElement).find("p").css({'cssText': prevStyle + 'color: ' +fontColor+' !important;'});
-	    $(targetElement).find("p").css("border", "");
-	    $(targetElement).css("border", "3px solid #ff0000");
-	}
+    move: function(color) {
+		var fontColor = color.toHexString();
+		console.log(fontColor);
+		if (elementSelected) {
+		    prevStyle = $(targetElement).attr('style');
+		    $(targetElement).css({'cssText': prevStyle + 'color: ' +fontColor+' !important;'});
+		    $(targetElement).find("p").css({'cssText': prevStyle + 'color: ' +fontColor+' !important;'});
+		    $(targetElement).find("p").css("border", "");
+		    $(targetElement).css("border", "3px solid #ff0000");
+		}
     }
 });
 
@@ -148,9 +151,6 @@ $('#fontColor').spectrum({
 $('#backColor').spectrum({
     flat: true,
     showPaletteOnly: true,
-    togglePaletteOnly: true,
-    togglePaletteMoreText: 'more',
-    togglePaletteLessText: 'less',
     palette: [
         ["#000","#444","#666","#999","#ccc","#eee","#f3f3f3","#fff"],
         ["#f00","#f90","#ff0","#0f0","#0ff","#00f","#90f","#f0f"],
@@ -161,15 +161,15 @@ $('#backColor').spectrum({
         ["#900","#b45f06","#bf9000","#38761d","#134f5c","#0b5394","#351c75","#741b47"],
         ["#600","#783f04","#7f6000","#274e13","#0c343d","#073763","#20124d","#4c1130"]
     ],
-    change: function(color) {
-	var backColor = color.toHexString();
-	console.log(backColor);
-	if (elementSelected) {
-	    prevStyle = $(targetElement).attr('style');
-	    $(targetElement).find("p").css({'cssText': prevStyle + 'background-color: ' +backColor+' !important;'}).css("border", "");
-	    $(targetElement).css({'cssText': prevStyle + 'background-color: ' +backColor+' !important;'}).css("border", "3px solid #ff0000");
-	    $(targetElement).attr("data", backColor).attr("change", true);
-	}
+    move: function(color) {
+		var backColor = color.toHexString();
+		console.log(backColor);
+		if (elementSelected) {
+		    prevStyle = $(targetElement).attr('style');
+		    $(targetElement).find("p").css({'cssText': prevStyle + 'background-color: ' +backColor+' !important;'}).css("border", "");
+		    $(targetElement).css({'cssText': prevStyle + 'background-color: ' +backColor+' !important;'}).css("border", "3px solid #ff0000");
+		    $(targetElement).attr("data", backColor).attr("change", true);
+		}
     }
 });
 
@@ -192,17 +192,9 @@ $('#fontList').selectable({
     }
 });
 
-$("#fontList").css({
-    listStyleType: "none",
-    margin: "0",
-    padding: "0",
-    width: "15%"
-});
-$("#fontList>li").css({
-    margin: "3px",
-    padding: "0.4em",
-    border: "solid 1px #000"
-});
+$("#fontList").css({"cssText": "margin: 0; padding: 0; width: 15%; list-style: none !important;"});
+
+$("#fontList>li").css({"cssText": "margin: 3px; padding: 0.4em; border: solid 1px #000; list-style: none !important;"});
 
 
 //テンプレート機能
@@ -304,14 +296,6 @@ $("#b1").click(function(){
 	templateB1.fontFamily 
 
     }).attr("change", true);
-    /*
-    $("#wrapBody").find("p").css({
-	'cssText': prevStyle +";"+
-	templateB1.backgroundColor +
-	templateB1.fontSize +
-	templateB1.color +
-	templateB1.fontFamily
-    });*/
     $("#wrapBody").find("p").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -320,8 +304,7 @@ $("#b1").click(function(){
 	    templateB1.color +
 	    templateB1.fontFamily
 	}).attr("change", true);
-    })
-        
+    })    
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -329,9 +312,37 @@ $("#b1").click(function(){
 	    templateB1.fontSize +
 	    templateB1.color +
 	    templateB1.fontFamily
-	})
+	}).attr("change", true);
     })
-    
+    $(":header").each(function(){
+	prevStyle = $(this).attr("style")
+	$(this).css({'cssText': prevStyle +";"+
+	    templateB1.fontWeight +
+	    templateB1.backgroundColor +
+	    templateB1.fontSize +
+	    templateB1.color +
+	    templateB1.fontFamily
+	}).attr("change", true);
+    })
+    $("#wrapBody").find("table").each(function(){
+	prevStyle = $(this).attr("style")
+	$(this).css({'cssText': prevStyle +";"+
+	    templateB1.backgroundColor +
+	    templateB1.fontSize +
+	    templateB1.color +
+	    templateB1.fontFamily
+	}).attr("change", true);
+    })
+    $("#wrapBody").find("section").each(function(){
+	prevStyle = $(this).attr("style")
+	$(this).css({'cssText': prevStyle +";"+
+	    templateB1.backgroundColor +
+	    templateB1.fontSize +
+	    templateB1.color +
+	    templateB1.fontFamily
+	}).attr("change", true);
+    })
+    /*
     $(":header").css({
 	'cssText': prevStyle +";"+
 	templateB1.fontWeight +
@@ -340,8 +351,8 @@ $("#b1").click(function(){
 	templateB1.color +
 	templateB1.fontFamily
     });
-    
-    $("#wrapBody").attr("change", true);
+    */
+    //$("#wrapBody").attr("change", true);
 });
 
 $("#list3").click(function(){
@@ -349,17 +360,52 @@ $("#list3").click(function(){
 		  .css("font-size", "")
 		  .css("font-weight", "")
 		  .css("font-style", "")
-		  .css("color", "");
+		  .css("color", "")
+		  .css("font-family", "")
+		  .attr("change", false);
     $("#wrapBody").find("p").css("background-color", "")
 		  .css("font-size", "")
 		  .css("font-weight", "")
 		  .css("font-style", "")
-		  .css("color", "");
-    $(":header").css("background-color", "")
-		.css("font-size", "")
-		.css("font-weight", "")
-		.css("font-style", "")
-		.css("color", "");
+		  .css("color", "")
+		  .css("font-family", "")
+		  .attr("change", false);
+    $(":header").each(function(){
+    	$(this).css("background-color", "")
+		    .css("font-size", "")
+		    .css("font-weight", "")
+		    .css("font-style", "")
+		    .css("color", "")
+		    .css("font-family", "")
+		    .attr("change", false);
+	})
+	$("#wrapBody").find("table").each(function(){
+		$(this).css("background-color", "")
+			.css("font-size", "")
+			.css("font-weight", "")
+			.css("font-style", "")
+			.css("color", "")
+			.css("font-family", "")
+			.attr("change", false);
+	})
+	$("#wrapBody").find("ul").each(function(){
+		$(this).css("background-color", "")
+			.css("font-size", "")
+			.css("font-weight", "")
+			.css("font-style", "")
+			.css("color", "")
+			.css("font-family", "")
+			.attr("change", false);
+	})
+	$("#wrapBody").find("section").each(function(){
+		$(this).css("background-color", "")
+			.css("font-size", "")
+			.css("font-weight", "")
+			.css("font-style", "")
+			.css("color", "")
+			.css("font-family", "")
+			.attr("change", false);
+	})
 });
 
 //要素の選択
@@ -407,12 +453,21 @@ var select = function(){
 //タブの切り替え時の処理
 $("#tab_template, #tab_css").click(function(){
     selectable = false;
+    /*
     if (elementSelected) {
 	prevStyle = $(targetElement).attr('style');
 	//$(targetElement).css({'cssText': prevStyle + 'border:  !important;'});
 	$(targetElement).css("border", "");
-    }
+    }*/
+    $(targetElement).css("border", "");
     $("#wrapBody [change!='true']").css({
+	opacity: "",
+	background: "",
+	zIndex: ""
+    });
+    $("#wrapBody [change='true']").filter(function(){
+	$(this).css("backgroundColor") == "#92f"
+    }).css({
 	opacity: "",
 	background: "",
 	zIndex: ""
