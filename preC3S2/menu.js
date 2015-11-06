@@ -824,7 +824,7 @@ $("#b7").click(function(){
 	'cssText': prevStyle +";"+
 	templateBan.backWhite +
 	templateBan.fontSize150 +
-	templateBan.colorBlcak+
+	templateBan.colorYellow+
 	templateBan.fontFamily
 
     }).attr("change", true);
@@ -833,7 +833,7 @@ $("#b7").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize150 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -842,7 +842,7 @@ $("#b7").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize150 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -852,7 +852,7 @@ $("#b7").click(function(){
 	    templateBan.fontWeight +
 	    templateBan.backWhite +
 	    templateBan.fontSize150 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -861,7 +861,7 @@ $("#b7").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize150 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -870,7 +870,7 @@ $("#b7").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize150 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -882,7 +882,7 @@ $("#b8").click(function(){
 	'cssText': prevStyle +";"+
 	templateBan.backWhite +
 	templateBan.fontSize200+
-	templateBan.colorBlcak+
+	templateBan.colorYellow+
 	templateBan.fontFamily
 
     }).attr("change", true);
@@ -891,7 +891,7 @@ $("#b8").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize200 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -900,7 +900,7 @@ $("#b8").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize200 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -910,7 +910,7 @@ $("#b8").click(function(){
 	    templateBan.fontWeight +
 	    templateBan.backWhite +
 	    templateBan.fontSize200 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -919,7 +919,7 @@ $("#b8").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize200 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -928,7 +928,7 @@ $("#b8").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize200 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -940,7 +940,7 @@ $("#b9").click(function(){
 	'cssText': prevStyle +";"+
 	templateBan.backWhite +
 	templateBan.fontSize100 +
-	templateBan.colorBlcak+
+	templateBan.colorYellow+
 	templateBan.fontFamily
 
     }).attr("change", true);
@@ -949,7 +949,7 @@ $("#b9").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize100 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -958,7 +958,7 @@ $("#b9").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize100 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -968,7 +968,7 @@ $("#b9").click(function(){
 	    templateBan.fontWeight +
 	    templateBan.backWhite +
 	    templateBan.fontSize100 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -977,7 +977,7 @@ $("#b9").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize100 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -986,7 +986,7 @@ $("#b9").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backWhite +
 	    templateBan.fontSize100 +
-	    templateBan.colorBlcak +
+	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -1379,6 +1379,7 @@ $("#b17").click(function(){
     $("#wrapBody").css({
 	'cssText': prevStyle +";"+
 	templateBan.backNavy +
+	templateBan.fontSize100 +
 	templateBan.colorWhite+
 	templateBan.fontFamily
 
@@ -1388,6 +1389,7 @@ $("#b17").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backNavy +
 	    templateBan.colorWhite +
+	    templateBan.fontSize100 +
 	    templateBan.fontFamily
 	}).attr("change", true);
     })
@@ -1395,6 +1397,7 @@ $("#b17").click(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backNavy +
+	    templateBan.fontSize100 +
 	    templateBan.colorWhite +
 	    templateBan.fontFamily
 	}).attr("change", true);
@@ -1404,6 +1407,7 @@ $("#b17").click(function(){
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.fontWeight +
 	    templateBan.backNavy +
+	    templateBan.fontSize100 +
 	    templateBan.colorWhite +
 	    templateBan.fontFamily
 	}).attr("change", true);
@@ -1412,6 +1416,7 @@ $("#b17").click(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backNavy +
+	    templateBan.fontSize100 +
 	    templateBan.colorWhite +
 	    templateBan.fontFamily
 	}).attr("change", true);
@@ -1420,6 +1425,7 @@ $("#b17").click(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
 	    templateBan.backNavy +
+	    templateBan.fontSize100 +
 	    templateBan.colorWhite +
 	    templateBan.fontFamily
 	}).attr("change", true);
