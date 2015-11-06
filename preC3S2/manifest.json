@@ -2,20 +2,20 @@
     "name": "PreC3S2",
     "version": "0.1",
     "manifest_version": 2,
-    
+
     "description": "C3S2の試作",
-    
+
     "permissions": [
         "tabs",
         "http://*/*",
         "https://*/*"
     ],
-    
+
     "browser_action": {
         "default_icon": "C3S2logo.png",
         "default_title": "PreC3S2"
     },
-    
+
     "background": {
         "scripts": ["background.js"]
     },
@@ -23,7 +23,9 @@
     "content_scripts":[
     {
         "matches": ["<all_urls>"],
-        "css": ["libs/jquery-ui.min.css","libs/spectrum.css"],
+        "css": ["libs/jquery-ui.min.css",
+                "libs/spectrum.css",
+                "libs/bootstrap.min.css"],
         "js": [
             "libs/jquery.js",
             "libs/jquery-ui.min.js",
@@ -32,6 +34,7 @@
             "libs/spectrum.js",
             "libs/src/ace.js",
             "libs/src/mode-css.js",
+            "libs/bootstrap.min.js",
             "content.js"
         ]
     }

@@ -1,6 +1,7 @@
 //$("body").wrapInner("<div id='wrapBody'></div>");
 
 var tabs= $("<div>").attr("id", "tabs");
+$("#tabs").load("tabs.html");
 var tablist= $("<ul>");
 tablist.append("<li id = 'tab_template'><a href='#template'>テンプレート</a></li>");
 tablist.append("<li id = 'tab_is'><a href='#individual_setting'>個別設定</a></li>");
@@ -8,29 +9,35 @@ tablist.append("<li id = 'tab_css'><a href='#css_writing'>CSS記述</a></li>");
 tabs.append(tablist);
 
 //テンプレート
+var c3s2content = $("<div>").attr("class", "container");
 var template= $("<div>").attr("id", "template");
-template.append("<li><button id='list1'>テンプレート１</button></li>");
-template.append("<li><button id='list2'>テンプレート2</button></li>");
-template.append("<li><button id='list3'>元に戻す</button></li>");
-template.append("<li><button id='b1'>b1</button></li>");
-template.append("<li><button id='b2'>b2</button></li>");
-template.append("<li><button id='b3'>b3</button></li>");
-template.append("<li><button id='b4'>b4</button></li>");
-template.append("<li><button id='b5'>b5</button></li>");
-template.append("<li><button id='b6'>b6</button></li>");
-template.append("<li><button id='b7'>b7</button></li>");
-template.append("<li><button id='b8'>b8</button></li>");
-template.append("<li><button id='b9'>b9</button></li>");
-template.append("<li><button id='b10'>b10</button></li>");
-template.append("<li><button id='b11'>b11</button></li>");
-template.append("<li><button id='b12'>b12</button></li>");
-template.append("<li><button id='b13'>b13</button></li>");
-template.append("<li><button id='b14'>b14</button></li>");
-template.append("<li><button id='b15'>b15</button></li>");
-template.append("<li><button id='b16'>b16</button></li>");
-template.append("<li><button id='b17'>b17</button></li>");
-
-tabs.append(template);
+var c3s2row = $("<div>").attr("class", "row");
+var blackWhite = $("<div>");
+var blackYellow = $("<div>");
+c3s2row.append("<div id='list1' class='col-md-2 btn btn-primary'>テンプレート１</div>");
+c3s2row.append("<div id='list2' class='col-md-2 btn btn-primary'>テンプレート2</div>");
+c3s2row.append("<div id='list3' class='col-md-2 btn btn-warning'>元に戻す</div>");
+blackWhite.append("<div id='b1', class='col-md-2 btn btn-primary'>b1</div>");
+blackWhite.append("<div id='b2' class='col-md-2 btn btn-primary'>b2</div>");
+blackWhite.append("<div id='b3' class='col-md-2 btn btn-primary'>b3</div>");
+blackYellow.append("<div id='b4' class='col-md-2 btn btn-primary'>b4</div>");
+blackYellow.append("<div id='b5' class='col-md-2 btn btn-primary'>b5</div>");
+blackYellow.append("<div id='b6' class='col-md-2 btn btn-primary'>b6</div>");
+c3s2row.append("<div id='b7' class='col-md-2 btn btn-primary'>b7</div>");
+c3s2row.append("<div id='b8' class='col-md-2 btn btn-primary'>b8</div>");
+c3s2row.append("<div id='b9' class='col-md-2 btn btn-primary'>b9</div>");
+c3s2row.append("<div id='b10' class='col-md-2 btn btn-primary'>b10</div>");
+c3s2row.append("<div id='b11' class='col-md-2 btn btn-primary'>b11</div>");
+c3s2row.append("<div id='b12' class='col-md-2 btn btn-primary'>b12</div>");
+c3s2row.append("<div id='b13' class='col-md-2 btn btn-primary'>b13</div>");
+c3s2row.append("<div id='b14' class='col-md-2 btn btn-primary'>b14</div>");
+c3s2row.append("<div id='b15' class='col-md-2 btn btn-primary'>b15</div>");
+c3s2row.append("<div id='b16' class='col-md-2 btn btn-primary'>b16</div>");
+c3s2row.append("<div id='b17' class='col-md-2 btn btn-primary'>b17</div>");
+c3s2row.append(blackYellow, blackWhite);
+template.append(c3s2row);
+c3s2content.append(template);
+tabs.append(c3s2content);
 
 //個別設定
 var i_setting= $("<div>").attr("id", "individual_setting");
@@ -99,7 +106,7 @@ $("#tabs").css({
     height: "34%",
     top: "65%",
     border: "solid",
-    align: "center",
+    // align: "center",
     margin: "0",
     overflow: "scroll",
     zIndex: 0x7FFFFFFF,
@@ -161,9 +168,9 @@ var save = function(Css){
 }
 
 //JQuery UI関連
-$('#tabs').tabs({ 
+$('#tabs').tabs({
 	heightStyle: 'auto',
-	active: 0 
+	active: 0
 });
 
 //シンタックスハイライトするテキストエリア
@@ -192,7 +199,7 @@ $('#slider').slider({
 				console.log(css);
 				save(css);
 		    }
-		    
+
 		}
     }
 });
@@ -410,7 +417,7 @@ var templateBan = {
 };
 
 $("#list1").click(function(){
-    
+
     prevStyle = $("#wrapBody").attr('style');
     $("#wrapBody").css({
 	'cssText': prevStyle +";"+
@@ -428,7 +435,7 @@ $("#list1").click(function(){
 	template1.fontStyle +
 	template1.color
     });
-    
+
     $(":header").css({
 	'cssText': prevStyle +";"+
 	template1.fontWeight +
@@ -437,7 +444,7 @@ $("#list1").click(function(){
 	template1.fontStyle +
 	template1.color
     });
-    
+
     $("#wrapBody").attr("data", "red").attr("change", true);
 });
 
@@ -466,7 +473,7 @@ $("#b1").click(function(){
 	templateBan.backBlack +
 	templateBan.fontSize150 +
 	templateBan.colorWhite+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -477,7 +484,7 @@ $("#b1").click(function(){
 	    templateBan.colorWhite +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -524,7 +531,7 @@ $("#b2").click(function(){
 	templateBan.backBlack +
 	templateBan.fontSize200+
 	templateBan.colorWhite+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -535,7 +542,7 @@ $("#b2").click(function(){
 	    templateBan.colorWhite +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -582,7 +589,7 @@ $("#b3").click(function(){
 	templateBan.backBlack +
 	templateBan.fontSize100 +
 	templateBan.colorWhite+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -593,7 +600,7 @@ $("#b3").click(function(){
 	    templateBan.colorWhite +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -640,7 +647,7 @@ $("#b4").click(function(){
 	templateBan.backBlack +
 	templateBan.fontSize150 +
 	templateBan.colorYellow+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -651,7 +658,7 @@ $("#b4").click(function(){
 	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -698,7 +705,7 @@ $("#b5").click(function(){
 	templateBan.backBlack +
 	templateBan.fontSize200+
 	templateBan.colorYellow+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -709,7 +716,7 @@ $("#b5").click(function(){
 	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -756,7 +763,7 @@ $("#b6").click(function(){
 	templateBan.backBlack +
 	templateBan.fontSize100 +
 	templateBan.colorYellow+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -767,7 +774,7 @@ $("#b6").click(function(){
 	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -814,7 +821,7 @@ $("#b7").click(function(){
 	templateBan.backWhite +
 	templateBan.fontSize150 +
 	templateBan.colorBlcak+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -825,7 +832,7 @@ $("#b7").click(function(){
 	    templateBan.colorBlcak +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -872,7 +879,7 @@ $("#b8").click(function(){
 	templateBan.backWhite +
 	templateBan.fontSize200+
 	templateBan.colorBlcak+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -883,7 +890,7 @@ $("#b8").click(function(){
 	    templateBan.colorBlcak +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -930,7 +937,7 @@ $("#b9").click(function(){
 	templateBan.backWhite +
 	templateBan.fontSize100 +
 	templateBan.colorBlcak+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -941,7 +948,7 @@ $("#b9").click(function(){
 	    templateBan.colorBlcak +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -988,7 +995,7 @@ $("#b10").click(function(){
 	templateBan.backNavy +
 	templateBan.fontSize150 +
 	templateBan.colorYellow+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -999,7 +1006,7 @@ $("#b10").click(function(){
 	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -1046,7 +1053,7 @@ $("#b11").click(function(){
 	templateBan.backNavy +
 	templateBan.fontSize200+
 	templateBan.colorYellow+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -1057,7 +1064,7 @@ $("#b11").click(function(){
 	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -1104,7 +1111,7 @@ $("#b12").click(function(){
 	templateBan.backNavy +
 	templateBan.fontSize100 +
 	templateBan.colorYellow+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -1115,7 +1122,7 @@ $("#b12").click(function(){
 	    templateBan.colorYellow +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -1160,7 +1167,7 @@ $("#b13").click(function(){
     $("#wrapBody").css({
 	'cssText': prevStyle +";"+
 	templateBan.fontSize150 +
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -1169,7 +1176,7 @@ $("#b13").click(function(){
 	    templateBan.fontSize150 +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -1206,7 +1213,7 @@ $("#b14").click(function(){
     $("#wrapBody").css({
 	'cssText': prevStyle +";"+
 	templateBan.fontSize200 +
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -1215,7 +1222,7 @@ $("#b14").click(function(){
 	    templateBan.fontSize200 +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -1254,7 +1261,7 @@ $("#b15").click(function(){
 	templateBan.backNavy +
 	templateBan.fontSize150 +
 	templateBan.colorWhite+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -1265,7 +1272,7 @@ $("#b15").click(function(){
 	    templateBan.colorWhite +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -1312,7 +1319,7 @@ $("#b16").click(function(){
 	templateBan.backNavy +
 	templateBan.fontSize200+
 	templateBan.colorWhite+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -1323,7 +1330,7 @@ $("#b16").click(function(){
 	    templateBan.colorWhite +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
@@ -1369,7 +1376,7 @@ $("#b17").click(function(){
 	'cssText': prevStyle +";"+
 	templateBan.backNavy +
 	templateBan.colorWhite+
-	templateBan.fontFamily 
+	templateBan.fontFamily
 
     }).attr("change", true);
     $("#wrapBody").find("p").each(function(){
@@ -1379,7 +1386,7 @@ $("#b17").click(function(){
 	    templateBan.colorWhite +
 	    templateBan.fontFamily
 	}).attr("change", true);
-    })    
+    })
     $("#wrapBody").find("ul").each(function(){
 	prevStyle = $(this).attr("style")
 	$(this).css({'cssText': prevStyle +";"+
