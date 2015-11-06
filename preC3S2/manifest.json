@@ -3,7 +3,7 @@
     "version": "0.1",
     "manifest_version": 2,
     
-    "description": "拡張機能のテスト1",
+    "description": "C3S2の試作",
     
     "permissions": [
         "tabs",
@@ -12,7 +12,7 @@
     ],
     
     "browser_action": {
-        "default_icon": "icon48.png",
+        "default_icon": "C3S2logo.png",
         "default_title": "PreC3S2"
     },
     
@@ -23,8 +23,17 @@
     "content_scripts":[
     {
         "matches": ["<all_urls>"],
-        "css": ["jquery-ui.min.css","spectrum.css"],
-        "js": ["jquery.js","jquery-ui.min.js","spectrum.js","content.js"]
+        "css": ["libs/jquery-ui.min.css","libs/spectrum.css"],
+        "js": [
+            "libs/jquery.js",
+            "libs/jquery-ui.min.js",
+            "libs/cssjson.js",
+            "libs/jquery.cookie.js",
+            "libs/spectrum.js",
+            "libs/src/ace.js",
+            "libs/src/mode-css.js",
+            "content.js"
+        ]
     }
     ]
 }
