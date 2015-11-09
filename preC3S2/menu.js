@@ -105,8 +105,8 @@ $("body").css("margin", "0");
 
 $("#tabs").css({
     position: "fixed",
-    "width": "100%",
-    height: "34%",
+    width: "100%",
+    height: "35%",
     top: "65%",
     border: "solid",
     // align: "center",
@@ -259,7 +259,7 @@ $('#backColor').spectrum({
 
 //フォント変更
 var style = '\
-	<style type="text/css">\n\
+	<style id="fontlist" type="text/css">\n\
 		#fontList .ui-selected { background: #F39814; color: white; }\n\
 		#fontList { margin; 0; padding: 0; width: 15%; list-style: none !important; }\n\
 		#fontList>li { margin: 3px; padding: 0.4em; border: solid 1px #000; list-style: none !important; }\n\
@@ -270,7 +270,7 @@ $('#fontList').selectable({
     stop: function(e, ui){
 	$(".ui-selected:first", this).each(function() {
 	    $(this).siblings().removeClass("ui-selected");
-        });
+    });
 	if (elementSelected) {
 	    //console.log($('.ui-selected').css("font-family"));
 	    //$(targetElement).css("font-family",$('.ui-selected').css("font-family"));
@@ -636,75 +636,27 @@ $("#list3").click(function(){
 	tempCSS = "";
 	console.log("reset template");
 	saveTemplate("");
-    $("#wrapBody").css("background-color", "")
-		  .css("font-size", "")
-		  .css("font-weight", "")
-		  .css("font-style", "")
-		  .css("color", "")
-		  .css("font-family", "")
-		  .attr("change", false);
+    $("#wrapBody").attr("change", false);
     $("#wrapBody").find("p").each(function(){
-    	$(this).css("background-color", "")
-		  .css("font-size", "")
-		  .css("font-weight", "")
-		  .css("font-style", "")
-		  .css("color", "")
-		  .css("font-family", "")
-		  .attr("change", false);
+    	$(this).attr("change", false);
 	});
 	$("#wrapBody").find("a").each(function(){
-		$(this).css("background-color", "")
-			.css("font-size", "")
-			.css("font-weight", "")
-			.css("font-style", "")
-			.css("color", "")
-			.css("font-family", "")
-			.attr("change", false);
+		$(this).attr("change", false);
 	});
 	$("#wrapBody").find("span").each(function(){
-		$(this).css("background-color", "")
-			.css("font-size", "")
-			.css("font-weight", "")
-			.css("font-style", "")
-			.css("color", "")
-			.css("font-family", "")
-			.attr("change", false);
+		$(this).attr("change", false);
 	});
     $(":header").each(function(){
-    	$(this).css("background-color", "")
-		    .css("font-size", "")
-		    .css("font-weight", "")
-		    .css("font-style", "")
-		    .css("color", "")
-		    .css("font-family", "")
-		    .attr("change", false);
+    	$(this).attr("change", false);
 	});
 	$("#wrapBody").find("table").each(function(){
-		$(this).css("background-color", "")
-			.css("font-size", "")
-			.css("font-weight", "")
-			.css("font-style", "")
-			.css("color", "")
-			.css("font-family", "")
-			.attr("change", false);
+		$(this).attr("change", false);
 	});
 	$("#wrapBody").find("ul").each(function(){
-		$(this).css("background-color", "")
-			.css("font-size", "")
-			.css("font-weight", "")
-			.css("font-style", "")
-			.css("color", "")
-			.css("font-family", "")
-			.attr("change", false);
+		$(this).attr("change", false);
 	});
 	$("#wrapBody").find("section").each(function(){
-		$(this).css("background-color", "")
-			.css("font-size", "")
-			.css("font-weight", "")
-			.css("font-style", "")
-			.css("color", "")
-			.css("font-family", "")
-			.attr("change", false);
+		$(this).attr("change", false);
 	});
 });
 
