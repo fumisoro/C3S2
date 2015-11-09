@@ -29,8 +29,7 @@
         "js": [
             "libs/jquery.js",
             "libs/jquery-ui.min.js",
-            "libs/cssjson.js",
-            "libs/jquery.cookie.js",
+            "libs/shortcut.js",
             "libs/spectrum.js",
             "libs/src/ace.js",
             "libs/src/mode-css.js",

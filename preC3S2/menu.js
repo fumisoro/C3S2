@@ -1,4 +1,3 @@
-//$("body").wrapInner("<div id='wrapBody'></div>");
 
 var tabs= $("<div>").attr("id", "tabs");
 var tablist= $("<ul>");
@@ -117,6 +116,7 @@ $("#tabs").css({
     background: ""
 });
 
+
 //閉じるボタン
 $("#closeMenu").click(function(){
     selectable = false;
@@ -136,22 +136,23 @@ $("#closeMenu").click(function(){
 $("#removeStyle").click(function(){
 	console.log("ok");
 	window.localStorage.removeItem("c3s2");
+	window.localStorage.removeItem("c3s2Template")
 	console.log("saved style removed");
-	$(savedStyle).empty();
+	$(myStyle).empty();
+	$(myTemplate).empty();
 });
 
-var myStyle = $("<style type='text/css'>")
-$("head").append(myStyle);
-
-var json;
 var css;
 if(css = window.localStorage.getItem("c3s2")){
 }else{
 	css = "";
 }
-// var css = window.localStorage.getItem("c3s2");
-// var styleHead = ;
-// var styleTail = '</style>';
+
+var tempCSS;
+if(tempCSS = window.localStorage.getItem("c3s2Template")){
+}else{
+	tempCSS = "";
+}
 
 //個別設定用変数
 var selectable = false;
@@ -159,19 +160,13 @@ var elementSelected = false;
 var targetElement = null;
 var prevStyle = null;
 
-// var save = function(Css, Json){
-// 	Json = CSSJSON.toJSON(css);
-// 	console.log("convert: CSStoJSN");
-// 	console.log(JSON.parse(Json));
-// 	window.localStorage.setItem("c3s2", Json);
-// 	console.log("save");
-// }
+//個別設定・CSS記述での変更を保存
 var save = function(Css){
 	window.localStorage.setItem("c3s2", Css);
 	console.log("saved:\n"+Css);
 }
 
-//JQuery UI関連
+//JQuery UI tabsウィジェット
 $('#tabs').tabs({
 	heightStyle: 'auto',
 	active: 0
@@ -286,9 +281,6 @@ $('#fontList').selectable({
     }
 });
 
-// $("#fontList").css({"cssText": "margin: 0; padding: 0; width: 15%; list-style: none !important;"});
-// $("#fontList>li").css({"cssText": "margin: 3px; padding: 0.4em; border: solid 1px #000; list-style: none !important;"});
-
 //要素の選択
 $("#tab_is").click(function(){
     selectable = true;
@@ -397,1043 +389,253 @@ $("#writingChange").click(function(){
 });
 
 //テンプレート機能
-var link_style = ''
-var template1 = {
-    'backgroundColor':'background-color: #ff0000 !important;',
-    'fontSize':'font-size: 24px !important;',
-    'fontWeight':'font-weight: bold !important;',
-    'fontStyle':'font-style: italic !important;',
-    'color':'color:  !important;'
+var saveTemplate = function(Css){
+	window.localStorage.setItem("c3s2Template", Css);
+	console.log("Template saved:\n"+Css);
 };
 
-var templateBan = {
-    'backBlack':'background-color: #000000 !important;',
-    'backWhite':'background-color: #ffffff !important;',
-    'backNavy':'background-color: #000080 !important;',
-    'fontSize100':'font-size: 100% !important;',
-    'fontSize150':'font-size: 150% !important;',
-    'fontSize200':'font-size: 200% !important;',
-    'fontWeight':'font-weight: bold !important;',
-    'colorWhite':'color: #ffffff !important;',
-    'colorYellow':'color: #ffff00 !important;',
-    'colorBlack':'color: #000000 !important;',
-    'fontFamily':'font-family: ヒラギノ角ゴ Pro W3 メイリオ !important'
-};
+var tempChange = function(back, size, color, link, visit){
+	var templateCSS = "\
+			 #wrapBody { background-color: "+back+";\n\
+			 			 font-size: "+size+";\n\
+			 			 color: "+color+";\n\
+			 			 font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody p { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody ul { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody span { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody table { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody section { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody h1,h2,h3,h4,h5,h6 { font-weight: bold;\n\
+			                               color: "+color+";\n\
+			                           }\n\
+			 #wrapBody a:link { color: "+link+";}\n\
+			 #wrapBody a:visited { color: "+visit+"}\n";
+	$(myTemplate).empty();
+	$(myTemplate).html(templateCSS);
+	tempCSS = templateCSS;
+	console.log(tempCSS);
+	saveTemplate(tempCSS);
+	$("#wrapBody").find("p").each(function(){
+		$(this).attr("change", true);
+	});
+	$("#wrapBody").find("ul").each(function(){
+		$(this).attr("change", true);
+	});
+	$("#wrapBody").find("span").each(function(){
+		$(this).attr("change", true);
+	})
+	$("#wrapBody").find("table").each(function(){
+		$(this).attr("change", true);
+	});
+	$("#wrapBody").find("section").each(function(){
+		$(this).attr("change", true);
+	});
+	$(":header").each(function(){
+		$(this).attr("change", true);
+	});
+}
 
-$("#list1").click(function(){
+var tempChangeB7_9 = function(back, size, color){
+	var templateCSS = "\
+			 #wrapBody { background-color: "+back+";\n\
+			 			 font-size: "+size+";\n\
+			 			 color: "+color+";\n\
+			 			 font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody p { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody ul { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody span { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody table { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody section { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody h1,h2,h3,h4,h5,h6 { font-weight: bold;\n\
+			                               color: "+color+";\n\
+			                           }\n";
+	$(myTemplate).empty();
+	$(myTemplate).html(templateCSS);
+	tempCSS = templateCSS;
+	console.log(tempCSS);
+	saveTemplate(tempCSS);
+	$("#wrapBody").find("p").each(function(){
+		$(this).attr("change", true);
+	});
+	$("#wrapBody").find("ul").each(function(){
+		$(this).attr("change", true);
+	});
+	$("#wrapBody").find("span").each(function(){
+		$(this).attr("change", true);
+	})
+	$("#wrapBody").find("table").each(function(){
+		$(this).attr("change", true);
+	});
+	$("#wrapBody").find("section").each(function(){
+		$(this).attr("change", true);
+	});
+	$(":header").each(function(){
+		$(this).attr("change", true);
+	});
+}
 
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	template1.fontWeight +
-	template1.backgroundColor +
-	template1.fontSize +
-	template1.fontStyle +
-	template1.color
-    });
-    $("#wrapBody").find("p").css({
-	'cssText': prevStyle +";"+
-	template1.fontWeight +
-	template1.backgroundColor +
-	template1.fontSize +
-	template1.fontStyle +
-	template1.color
-    });
+var tempChangeB13_14 = function(size){
+	var templateCSS = "\
+			 #wrapBody { font-size: "+size+";\n\
+			 			 font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody p { font-size: "+size+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody ul { font-size: "+size+";\n\
+			 			    font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody span { font-size: "+size+";\n\
+			 			      font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody table { font-size: "+size+";\n\
+			 			       font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody section { font-size: "+size+";\n\
+			 			         font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody h1,h2,h3,h4,h5,h6 { font-weight: bold;}\n";
+	$(myTemplate).empty();
+	$(myTemplate).html(templateCSS);
+	tempCSS = templateCSS;
+	console.log(tempCSS);
+	saveTemplate(tempCSS);
+	$("#wrapBody").find("p").each(function(){
+		$(this).attr("change", false);
+	});
+	$("#wrapBody").find("ul").each(function(){
+		$(this).attr("change", false);
+	});
+	$("#wrapBody").find("span").each(function(){
+		$(this).attr("change", false);
+	})
+	$("#wrapBody").find("table").each(function(){
+		$(this).attr("change", false);
+	});
+	$("#wrapBody").find("section").each(function(){
+		$(this).attr("change", false);
+	});
+	$(":header").each(function(){
+		$(this).attr("change", false);
+	});
+}
 
-    $(":header").css({
-	'cssText': prevStyle +";"+
-	template1.fontWeight +
-	template1.backgroundColor +
-	template1.fontSize +
-	template1.fontStyle +
-	template1.color
-    });
-
-    $("#wrapBody").attr("data", "red").attr("change", true);
-});
-
-$("#list2").click(function(){
-    $("#wrapBody").css("background-color", "black")
-		  .css("font-size", "")
-		  .css("font-weight", "")
-		  .css("font-style", "")
-		  .css("color", "yellow")
-    $("#wrapBody").find("p").css("background-color", "black")
-		  .css("font-size", "")
-		  .css("font-weight", "")
-		  .css("font-style", "")
-		  .css("color", "yellow");
-    $(":header").css("background-color", "black")
-		  .css("font-size", "")
-		  .css("font-weight", "")
-		  .css("font-style", "")
-		  .css("color", "yellow");
-});
-
-$("#b1").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backBlack +
-	templateBan.fontSize150 +
-	templateBan.colorWhite+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize150 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize150 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backBlack +
-	    templateBan.fontSize150 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize150 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize150 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+$("#b1").click(function() {
+	tempChange("black", "150%", "white", "aqua", "green");
 });
 
 $("#b2").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backBlack +
-	templateBan.fontSize200+
-	templateBan.colorWhite+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize200 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize200 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backBlack +
-	    templateBan.fontSize200 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize200 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize200 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChange("black", "200%", "white", "aqua", "green");
 });
 
 $("#b3").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backBlack +
-	templateBan.fontSize100 +
-	templateBan.colorWhite+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize100 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize100 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backBlack +
-	    templateBan.fontSize100 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize100 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize100 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+    tempChange("black", "100%", "white", "aqua", "green");
 });
 
 $("#b4").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backBlack +
-	templateBan.fontSize150 +
-	templateBan.colorYellow+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backBlack +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChange("black", "150%", "yellow", "fuchsia", "red");
 });
 
 $("#b5").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backBlack +
-	templateBan.fontSize200+
-	templateBan.colorYellow+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backBlack +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChange("black", "200%", "yellow", "fuchsia", "red");
 });
 
 $("#b6").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backBlack +
-	templateBan.fontSize100 +
-	templateBan.colorYellow+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backBlack +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backBlack +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChange("black", "100%", "yellow", "fuchsia", "red");
 });
 
 $("#b7").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backWhite +
-	templateBan.fontSize150 +
-	templateBan.colorYellow+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backWhite +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChangeB7_9("white", "150%", "yellow");
 });
 
 $("#b8").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backWhite +
-	templateBan.fontSize200+
-	templateBan.colorYellow+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backWhite +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChangeB7_9("white", "200%", "yellow");
 });
 
 $("#b9").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backWhite +
-	templateBan.fontSize100 +
-	templateBan.colorYellow+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backWhite +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backWhite +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChangeB7_9("white", "100%", "yellow");
 });
 
 $("#b10").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backNavy +
-	templateBan.fontSize150 +
-	templateBan.colorYellow+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backNavy +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize150 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChange("navy", "150%", "yellow", "fuchsia", "red");
 });
 
 $("#b11").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backNavy +
-	templateBan.fontSize200+
-	templateBan.colorYellow+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backNavy +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize200 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChange("navy", "200%", "yellow", "fuchsia", "red");
 });
 
 $("#b12").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backNavy +
-	templateBan.fontSize100 +
-	templateBan.colorYellow+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backNavy +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize100 +
-	    templateBan.colorYellow +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChange("navy", "100%", "yellow", "fuchsia", "red");
 });
 
 $("#b13").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.fontSize150 +
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontSize150 +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontSize150 +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.fontSize150 +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontSize150 +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontSize150 +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChangeB13_14("150%");
 });
 
 $("#b14").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.fontSize200 +
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontSize200 +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontSize200 +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.fontSize200 +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontSize200 +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontSize200 +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChangeB13_14("200%");
 });
 
 $("#b15").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backNavy +
-	templateBan.fontSize150 +
-	templateBan.colorWhite+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize150 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize150 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backNavy +
-	    templateBan.fontSize150 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize150 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize150 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChange("navy", "150%", "white", "fuchsia", "red");
 });
 
 $("#b16").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backNavy +
-	templateBan.fontSize200+
-	templateBan.colorWhite+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize200 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize200 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backNavy +
-	    templateBan.fontSize200 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize200 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize200 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChange("navy", "200%", "white", "fuchsia", "red");
 });
 
 $("#b17").click(function(){
-    prevStyle = $("#wrapBody").attr('style');
-    $("#wrapBody").css({
-	'cssText': prevStyle +";"+
-	templateBan.backNavy +
-	templateBan.fontSize100 +
-	templateBan.colorWhite+
-	templateBan.fontFamily
-
-    }).attr("change", true);
-    $("#wrapBody").find("p").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.colorWhite +
-	    templateBan.fontSize100 +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("ul").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize100 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $(":header").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.fontWeight +
-	    templateBan.backNavy +
-	    templateBan.fontSize100 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("table").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize100 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
-    $("#wrapBody").find("section").each(function(){
-	prevStyle = $(this).attr("style")
-	$(this).css({'cssText': prevStyle +";"+
-	    templateBan.backNavy +
-	    templateBan.fontSize100 +
-	    templateBan.colorWhite +
-	    templateBan.fontFamily
-	}).attr("change", true);
-    })
+	tempChange("navy", "100%", "white", "fuchsia", "red");
 });
 
 //元に戻す
 $("#list3").click(function(){
+	$(myTemplate).empty();
+	tempCSS = "";
+	console.log("reset template");
+	saveTemplate("");
     $("#wrapBody").css("background-color", "")
 		  .css("font-size", "")
 		  .css("font-weight", "")
@@ -1441,20 +643,33 @@ $("#list3").click(function(){
 		  .css("color", "")
 		  .css("font-family", "")
 		  .attr("change", false);
-    $("#wrapBody").find("p").css("background-color", "")
+    $("#wrapBody").find("p").each(function(){
+    	$(this).css("background-color", "")
 		  .css("font-size", "")
 		  .css("font-weight", "")
 		  .css("font-style", "")
 		  .css("color", "")
 		  .css("font-family", "")
 		  .attr("change", false);
-	$("#wrapBody").find("span").css("background-color", "")
-		  .css("font-size", "")
-		  .css("font-weight", "")
-		  .css("font-style", "")
-		  .css("color", "")
-		  .css("font-family", "")
-		  .attr("change", false);
+	});
+	$("#wrapBody").find("a").each(function(){
+		$(this).css("background-color", "")
+			.css("font-size", "")
+			.css("font-weight", "")
+			.css("font-style", "")
+			.css("color", "")
+			.css("font-family", "")
+			.attr("change", false);
+	});
+	$("#wrapBody").find("span").each(function(){
+		$(this).css("background-color", "")
+			.css("font-size", "")
+			.css("font-weight", "")
+			.css("font-style", "")
+			.css("color", "")
+			.css("font-family", "")
+			.attr("change", false);
+	});
     $(":header").each(function(){
     	$(this).css("background-color", "")
 		    .css("font-size", "")
@@ -1463,7 +678,7 @@ $("#list3").click(function(){
 		    .css("color", "")
 		    .css("font-family", "")
 		    .attr("change", false);
-	})
+	});
 	$("#wrapBody").find("table").each(function(){
 		$(this).css("background-color", "")
 			.css("font-size", "")
@@ -1472,7 +687,7 @@ $("#list3").click(function(){
 			.css("color", "")
 			.css("font-family", "")
 			.attr("change", false);
-	})
+	});
 	$("#wrapBody").find("ul").each(function(){
 		$(this).css("background-color", "")
 			.css("font-size", "")
@@ -1481,7 +696,7 @@ $("#list3").click(function(){
 			.css("color", "")
 			.css("font-family", "")
 			.attr("change", false);
-	})
+	});
 	$("#wrapBody").find("section").each(function(){
 		$(this).css("background-color", "")
 			.css("font-size", "")
@@ -1490,7 +705,63 @@ $("#list3").click(function(){
 			.css("color", "")
 			.css("font-family", "")
 			.attr("change", false);
-	})
+	});
 });
 
+// $("#b1").click(function(){
+//     prevStyle = $("#wrapBody").attr('style');
+//     $("#wrapBody").css({
+// 	'cssText': prevStyle +";"+
+// 	templateBan.backBlack +
+// 	templateBan.fontSize150 +
+// 	templateBan.colorWhite+
+// 	templateBan.fontFamily
 
+//     }).attr("change", true);
+//     $("#wrapBody").find("p").each(function(){
+// 	prevStyle = $(this).attr("style")
+// 	$(this).css({'cssText': prevStyle +";"+
+// 	    templateBan.backBlack +
+// 	    templateBan.fontSize150 +
+// 	    templateBan.colorWhite +
+// 	    templateBan.fontFamily
+// 	}).attr("change", true);
+//     })
+//     $("#wrapBody").find("ul").each(function(){
+// 	prevStyle = $(this).attr("style")
+// 	$(this).css({'cssText': prevStyle +";"+
+// 	    templateBan.backBlack +
+// 	    templateBan.fontSize150 +
+// 	    templateBan.colorWhite +
+// 	    templateBan.fontFamily
+// 	}).attr("change", true);
+//     })
+//     $(":header").each(function(){
+// 	prevStyle = $(this).attr("style")
+// 	$(this).css({'cssText': prevStyle +";"+
+// 	    templateBan.fontWeight +
+// 	    templateBan.backBlack +
+// 	    templateBan.fontSize150 +
+// 	    templateBan.colorWhite +
+// 	    templateBan.fontFamily
+// 	}).attr("change", true);
+//     })
+//     $("#wrapBody").find("table").each(function(){
+// 	prevStyle = $(this).attr("style")
+// 	$(this).css({'cssText': prevStyle +";"+
+// 	    templateBan.backBlack +
+// 	    templateBan.fontSize150 +
+// 	    templateBan.colorWhite +
+// 	    templateBan.fontFamily
+// 	}).attr("change", true);
+//     })
+//     $("#wrapBody").find("section").each(function(){
+// 	prevStyle = $(this).attr("style")
+// 	$(this).css({'cssText': prevStyle +";"+
+// 	    templateBan.backBlack +
+// 	    templateBan.fontSize150 +
+// 	    templateBan.colorWhite +
+// 	    templateBan.fontFamily
+// 	}).attr("change", true);
+//     })
+// });
