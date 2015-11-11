@@ -192,9 +192,9 @@ $('#slider').slider({
     change: function(e, ui){//スライダーの操作が終了したときに変更をローカルストレージへ保存
     	if (elementSelected) {
 		    if($(targetElement).attr("id")){
-		    	var fsize = '#'+$(targetElement).attr("id")+' { font-size: '+ui.value+'px; }';
+		    	var fsize = '#'+$(targetElement).attr("id")+' { font-size: '+ui.value+'px; }\n';
 				$(myStyle).html($(myStyle).html() + fsize);
-				css = css + fsize+ "\n";
+				css = css + fsize;
 				console.log(css);
 				save(css);
 		    }
@@ -226,6 +226,17 @@ $('#fontColor').spectrum({
 		    $(targetElement).find("p").css({'cssText': prevStyle + 'color: ' +fontColor+' !important;'});
 		    $(targetElement).find("p").css("border", "");
 		    $(targetElement).css("border", "3px solid #ff0000");
+		    if($(targetElement).attr("id")){
+		    	var id = $(targetElement).attr("id")
+		    	var fcolor = "\
+		    		#"+id+" {color: "+fontColor+";}\n\
+		    		#"+id+" p {color: "+fontColor+";}\n"
+		    	$(myStyle).html($(myStyle).html() + fcolor);
+				css = css + fcolor;
+				console.log(css);
+				save(css);
+		    }
+		   
 
 		}
     }
@@ -253,6 +264,16 @@ $('#backColor').spectrum({
 		    $(targetElement).find("p").css({'cssText': prevStyle + 'background-color: ' +backColor+' !important;'}).css("border", "");
 		    $(targetElement).css({'cssText': prevStyle + 'background-color: ' +backColor+' !important;'}).css("border", "3px solid #ff0000");
 		    $(targetElement).attr("data", backColor).attr("change", true);
+		    if($(targetElement).attr("id")){
+		    	var id = $(targetElement).attr("id");
+		    	var bcolor = "\
+		    		#"+id+" {background-color: "+backColor+";}\n\
+		    		#"+id+" p {background-color: "+backColor+";}\n"
+		    	$(myStyle).html($(myStyle).html() + bcolor);
+				css = css + bcolor;
+				console.log(css);
+				save(css);
+		    }
 		}
     }
 });
@@ -268,16 +289,40 @@ $(style).appendTo('head');
 
 $('#fontList').selectable({
     stop: function(e, ui){
-	$(".ui-selected:first", this).each(function() {
-	    $(this).siblings().removeClass("ui-selected");
-    });
-	if (elementSelected) {
-	    //console.log($('.ui-selected').css("font-family"));
-	    //$(targetElement).css("font-family",$('.ui-selected').css("font-family"));
-	    prevStyle = $(targetElement).attr('style');
-	    //$(targetElement).css({'cssText':'font-family'+ $('.ui-selected').css("font-family") +'!important;'});
-	    $(targetElement).css({'cssText': prevStyle + 'font-family: ' +$('.ui-selected').css("font-family")+' !important;'});
-	}
+		$(".ui-selected:first", this).each(function() {
+		    $(this).siblings().removeClass("ui-selected");
+	    });
+		if (elementSelected) {
+		    //console.log($('.ui-selected').css("font-family"));
+		    //$(targetElement).css("font-family",$('.ui-selected').css("font-family"));
+		    prevStyle = $(targetElement).attr('style');
+		    //$(targetElement).css({'cssText':'font-family'+ $('.ui-selected').css("font-family") +'!important;'});
+		    $(targetElement).css({'cssText': prevStyle + 'font-family: ' +$('.ui-selected').css("font-family")+' !important;'});
+		    if($(targetElement).attr("id")){
+				var id = $(targetElement).attr("id");
+		    	var ffamily = "#"+id+" {font-family: "+$('.ui-selected').css("font-family")+";}\n";
+		    	$(myStyle).html($(myStyle).html() + ffamily);
+				css = css + ffamily;
+				console.log(css);
+				save(css);
+			}
+		}
+    }
+});
+
+//非表示
+$("#is_hide").click(function(){
+    if (elementSelected) {
+		prevStyle = $(targetElement).attr('style');
+		$(targetElement).css({'cssText': prevStyle + 'display: none !important;'});
+		if($(targetElement).attr("id")){
+			var id = $(targetElement).attr("id");
+	    	var hide = "#"+id+" {display: none;}\n";
+	    	$(myStyle).html($(myStyle).html() + hide);
+			css = css + hide;
+			console.log(css);
+			save(css);
+		}
     }
 });
 
@@ -370,14 +415,6 @@ $("#wrapBody").click(function(event){
     }
 })
 
-//非表示
-$("#is_hide").click(function(){
-    if (elementSelected) {
-	prevStyle = $(targetElement).attr('style');
-	$(targetElement).css({'cssText': prevStyle + 'display: none !important;'});
-	//$(targetElement).hide();
-    }
-});
 //css記述
 $("#writingChange").click(function(){
 	var text = editor.getValue();
