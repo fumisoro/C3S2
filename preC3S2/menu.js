@@ -132,13 +132,20 @@ $("#closeMenu").click(function(){
     //console.log($("wrapBody *").attr("style"));
 });
 
+//保存したスタイルを破棄
 $("#removeStyle").click(function(){
 	console.log("ok");
 	window.localStorage.removeItem("c3s2");
 	window.localStorage.removeItem("c3s2Template")
+	window.localStorage.removeItem("c3s2Style");
 	console.log("saved style removed");
 	$(myStyle).empty();
 	$(myTemplate).empty();
+	$("#wrapBody [c3s2_fsize='true']").css("font-size", "").attr("c3s2_fsize", false);
+	$("#wrapBody [c3s2_fcolor='true']").css("color", "").attr("c3s2_fcolor", false);
+	$("#wrapBody [c3s2_bcolor='true']").css("background-color", "").attr("c3s2_bcolor", false);
+	$("#wrapBody [c3s2_ffamily='true']").css("font-family", "").attr("c3s2_ffamily", false);
+	$("#wrapBody [c3s2_hide='true']").css("display", "").attr("c3s2_hide", false);
 });
 
 var css;
@@ -153,6 +160,16 @@ if(tempCSS = window.localStorage.getItem("c3s2Template")){
 	tempCSS = "";
 }
 
+var i_style = new Array();
+var i_styleJson = null;
+if(i_styleJson = window.localStorage.getItem("c3s2Style")){
+	console.log("i_styleJson:"+$.type(i_styleJson));
+	i_style = JSON.parse(i_styleJson);
+}
+
+// i_style = JSON.parse(window.localStorage.getItem("c3s2Style"));
+console.log("i_style:"+$.type(i_style));
+
 //個別設定用変数
 var selectable = false;
 var elementSelected = false;
@@ -163,6 +180,60 @@ var prevStyle = null;
 var save = function(Css){
 	window.localStorage.setItem("c3s2", Css);
 	console.log("saved:\n"+Css);
+}
+
+var saveStyle = function(array){
+	// var obj = {idx:idx, type:type, css:Css} ;
+	// console.log(obj);
+	// i_style.push(obj);
+	// console.log(i_style);
+	// var json = JSON.stringify(i_style);
+	var json = JSON.stringify(array);
+	window.localStorage.setItem("c3s2Style", json);
+	console.log("saved style:\n"+json);
+	console.log($.type(json))
+}
+
+function checkTarget(elem){
+	var index = $("*").index(elem);
+	var cssStr = ":root:nth-child("+index+")";
+	return cssStr;
+}
+
+var checkSelf = function(elem){
+	var parent = $(elem).parent();
+	var index = $("*").index(elem);
+	console.log("index: "+index+"\n");
+	console.log($("*:eq("+index+")"));
+	var cssStr
+	//var cssStr = ":nth-child("+index+")";
+	return cssStr;
+}
+
+function checkTree(elem, str){
+	var cssStr = str; 
+	console.log(cssStr);
+	var parent = $(elem).parent()[0];
+	var index = $(parent).index(elem);
+	if($(parent).attr("id")){
+		console.log("id\n"+$(elem).get(0).id);
+		cssStr = $(parent).attr("id")+" "+cssStr;
+		return cssStr;
+	}
+	// else if($(parent).attr("tagName") == ("body" || "BODY")){
+	// 	cssStr = "body "+cssStr;
+	// 	return cssStr;
+	// }
+	else{
+		if(cssStr == ""){
+			console.log("tagName\n"+$(elem).get(0).nodeName);
+			cssStr = cssStr+$(elem).get(0).tagName;
+		}else{
+			console.log("else\n"+$(elem).get(0).tagName);
+			cssStr = cssStr+" "+$(elem).get(0).tagName;
+		}
+		checkTree(parent, cssStr);
+	}
 }
 
 //JQuery UI tabsウィジェット
@@ -196,6 +267,19 @@ $('#slider').slider({
 				css = css + fsize;
 				console.log(css);
 				save(css);
+		    }else{
+		  //   	var fsize = checkTarget(targetElement) +' { font-size: '+ui.value+'px; }\n';
+		  //   	$(myStyle).html($(myStyle).html() + fsize);
+				// css = css + fsize;
+				// console.log(css);
+				// save(css);
+				var index = $("*").index(targetElement);
+				var obj = {idx:index, type:"fsize", css:ui.value} ;
+				console.log(obj);
+				i_style.push(obj);
+				console.log(i_style);
+				saveStyle(i_style);
+				// saveStyle(index, "fsize", ui.value);
 		    }
 
 		}
@@ -234,6 +318,20 @@ $('#fontColor').spectrum({
 				css = css + fcolor;
 				console.log(css);
 				save(css);
+		    }else{
+		  //   	var fcolor = "\
+		  //   		"+checkTarget(targetElement)+" { color: "+fontColor+"; }\n\
+		  //   		"+checkTarget(targetElement)+" p { color: "+fontColor+"; }\n";
+		  //   	$(myStyle).html($(myStyle).html() + fcolor);
+				// css = css + fcolor;
+				// console.log(css);
+				// save(css);
+				var index = $("*").index(targetElement);
+				var obj = {idx:index, type:"fcolor", css:fontColor} ;
+				console.log(obj);
+				i_style.push(obj);
+				console.log(i_style);
+				saveStyle(i_style);
 		    }
 		   
 
@@ -272,6 +370,13 @@ $('#backColor').spectrum({
 				css = css + bcolor;
 				console.log(css);
 				save(css);
+		    }else{
+		    	var index = $("*").index(targetElement);
+				var obj = {idx:index, type:"bcolor", css:backColor} ;
+				console.log(obj);
+				i_style.push(obj);
+				console.log(i_style);
+				saveStyle(i_style);
 		    }
 		}
     }
@@ -304,10 +409,23 @@ $('#fontList').selectable({
 				css = css + ffamily;
 				console.log(css);
 				save(css);
+			}else{
+				var index = $("*").index(targetElement);
+				var obj = {idx:index, type:"ffamily", css:$('.ui-selected').css("font-family")} ;
+				console.log(obj);
+				i_style.push(obj);
+				console.log(i_style);
+				saveStyle(i_style);
 			}
 		}
     }
 });
+
+//alert($.fn.jquery);
+// $("#tabs").addClass("c3s2");
+// $("#tabs *").each(function(){
+// 	$(this).addClass("c3s2");
+// })
 
 //非表示
 $("#is_hide").click(function(){
@@ -321,11 +439,20 @@ $("#is_hide").click(function(){
 			css = css + hide;
 			console.log(css);
 			save(css);
+		}else{
+			var index = $("*").index(targetElement);
+			var obj = {idx:index, type:"hide", css:"none"} ;
+			console.log(obj);
+			i_style.push(obj);
+			console.log(i_style);
+			saveStyle(i_style);
 		}
     }
 });
 
+
 //要素の選択
+var overT;
 $("#tab_is").click(function(){
     selectable = true;
     if (selectable) {
@@ -334,37 +461,38 @@ $("#tab_is").click(function(){
 });
 
 var select = function(){
-    $("#wrapBody *").mouseover(
-	function(eo) {
-	    var overT = eo.target;
+    $("#wrapBody *").mouseover(function(eo) {
+    //$("body:not(#tabs *)").mouseover(function(eo) {
+    	overT = eo.target;
 	    var outT = eo.relatedTarget
 	    var colorValue = null;
 	    if ($(outT).attr("data")){
-		colorValue = $(outT).attr("data");
+			colorValue = $(outT).attr("data");
 	    }
 	    if (selectable) {
-		$(overT).css({
-		    opacity: "0.6",
-		    background: "#9ef",
-		    zIndex: 0x7FFFFFFE
+			$(overT).css({
+			    opacity: "0.6",
+			    background: "#9ef",
+			    zIndex: 0x7FFFFFFE
 		});
 		//console.log($(outT).filter("wrapBody"));
 		if (colorValue) {
 		    $(outT).filter("#wrapBody *").css({
-			opacity: "",
-			background: colorValue,
-			zIndex: ""
+		    //$(outT).not("#tabs *").css({
+				opacity: "",
+				background: colorValue,
+				zIndex: ""
 		    });
 		}else{
 		    $(outT).filter("#wrapBody *").css({
-			opacity: "",
-			background: "",
-			zIndex: ""
+		    // $(outT).not("#tabs *").css({
+				opacity: "",
+				background: "",
+				zIndex: ""
 		    });
 		}
 	    }
-	}
-    );
+	});
 }
 
 //タブの切り替え時の処理
@@ -378,41 +506,48 @@ $("#tab_template, #tab_css").click(function(){
     }*/
     $(targetElement).css("border", "");
     $("#wrapBody [change!='true']").css({
-	opacity: "",
-	background: "",
-	zIndex: ""
+    // $("[change!='true']").not("#tabs *").css({
+		opacity: "",
+		background: "",
+		zIndex: ""
     });
     $("#wrapBody [change='true']").filter(function(){
-	$(this).css("backgroundColor") == "#92f"
-    }).css({
-	opacity: "",
-	background: "",
-	zIndex: ""
-    });
+    // $("[change='true']").not("#tabs *").filter(function(){
+		$(this).css("backgroundColor") == "#92f"
+	}).css({
+		opacity: "",
+		background: "",
+		zIndex: ""
+	});
 });
 
 //選択する要素の決定
 $("#wrapBody").click(function(event){
-    if (selectable) {
-	console.log(event.target);
-	if (targetElement) {
-	    prevStyle = $(targetElement).attr('style');
-	    //$(targetElement).css({'cssText': prevStyle + 'border:  !important;'});
-	    $(targetElement).css("border", "");
+// $("body:not(#tabs *)").click(function(event){
+	if(!$(this).hasClass("c3s2")){
+	    if (selectable) {
+			console.log(event.target);
+			if (targetElement) {
+			    prevStyle = $(targetElement).attr('style');
+			    //$(targetElement).css({'cssText': prevStyle + 'border:  !important;'});
+			    $(targetElement).css("border", "");
+			}
+			// targetElement = event.target;
+			targetElement = overT;
+			prevStyle = $(targetElement).attr('style');
+			//$(targetElement).css({'cssText': prevStyle + 'border: 3px solid #ff0000 !important;'});
+			$(targetElement).css("border", "3px solid #ff0000");
+			elementSelected = true;
+			//selectable = false;
+			$("#wrapBody [change!='true']").css({
+			// $("[change!='true']").not("#tabs *").css({
+			    opacity: "",
+			    background: "",
+			    zIndex: ""
+			});
+	    }
 	}
-	targetElement = event.target;
-	prevStyle = $(targetElement).attr('style');
-	//$(targetElement).css({'cssText': prevStyle + 'border: 3px solid #ff0000 !important;'});
-	$(targetElement).css("border", "3px solid #ff0000");
-	elementSelected = true;
-	//selectable = false;
-	$("#wrapBody [change!='true']").css({
-	    opacity: "",
-	    background: "",
-	    zIndex: ""
-	});
-    }
-})
+});
 
 //css記述
 $("#writingChange").click(function(){
@@ -431,6 +566,7 @@ var saveTemplate = function(Css){
 };
 
 var tempChange = function(back, size, color, link, visit){
+	$("#wrapBody [c3s2_fsize='true']").css("font-size", "");
 	var templateCSS = "\
 			 #wrapBody { background-color: "+back+";\n\
 			 			 font-size: "+size+";\n\
@@ -493,6 +629,7 @@ var tempChange = function(back, size, color, link, visit){
 }
 
 var tempChangeB7_9 = function(back, size, color){
+	$("#wrapBody [c3s2_fsize='true']").css("font-size", "");
 	var templateCSS = "\
 			 #wrapBody { background-color: "+back+";\n\
 			 			 font-size: "+size+";\n\
@@ -553,6 +690,7 @@ var tempChangeB7_9 = function(back, size, color){
 }
 
 var tempChangeB13_14 = function(size){
+	$("#wrapBody [c3s2_fsize='true']").css("font-size", "");
 	var templateCSS = "\
 			 #wrapBody { font-size: "+size+";\n\
 			 			 font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
