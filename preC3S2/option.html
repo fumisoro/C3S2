@@ -1,0 +1,91 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>オプションページ</title>
+		<script src="libs/jquery.js"></script>
+		<script src="libs/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="/libs/jquery-ui.min.css">
+		<link rel="stylesheet" href="/libs/jquery-ui.theme.css">
+		<style>
+			body {
+				padding: 20px;
+				background-color: #000;
+				color: #ff0;
+			}
+			.ui-menu { width: 200px; }
+  		.ui-widget-header { padding: 0.2em; }
+			.container {
+				margin: 0 auto;
+				display: flex;
+				display: -moz-flex;
+				display: -o-flex;
+				display: -webkit-flex;
+				display: -ms-flex;
+				flex-direction: row;
+				-moz-flex-direction: row;
+				-o-flex-direction: row;
+				-webkit-flex-direction: row;
+				-ms-flex-direction: row;
+			}
+			#menu {
+				font-size: 18px;
+			}
+  		#testArea{
+				padding: 30px;
+				width: 70%;
+				background-color: #fff;
+		    color: #000;
+  		}
+			#wrapBody {
+				width: 95%;
+				height: 500px;
+				padding: 10px;
+				border: solid #f00;
+			}
+			#save {
+
+			}
+		</style>
+		<script src="option.js"></script>
+	</head>
+	<body>
+		<h1>C3S2 setting</h1>
+  		<div class="container">
+	  		<ul id="menu"　class="item">
+	  			<li id="none">none</li>
+				<li class="ui-widget-header">背景色黒 文字色白</li>
+				<li id="b1">150%</li>
+				<li id="b2">200%</li>
+				<li id="b3">100%</li>
+				<li class="ui-widget-header">背景色黒 文字色黄</li>
+				<li id="b4">150%</li>
+				<li id="b5">200%</li>
+				<li id="b6">100%</li>
+				<li class="ui-widget-header">背景色白 文字色黄</li>
+				<li id="b7">150%</li>
+				<li id="b8">200%</li>
+				<li id="b9">100%</li>
+				<li class="ui-widget-header">背景色青 文字色黄</li>
+				<li id="b10">150%</li>
+				<li id="b11">200%</li>
+				<li id="b12">100%</li>
+				<li class="ui-widget-header">背景色青 文字色白</li>
+				<li id="b15">150%</li>
+				<li id="b16">200%</li>
+				<li id="b17">100%</li>
+				<li class="ui-widget-header">一括変更	</li>
+				<li id="b13">150%</li>
+				<li id="b14">200%</li>
+			</ul>
+	  		<div id="testArea" class="item">
+		  		<p>test area</p>
+		  		<div id="wrapBody">
+		  			<h1>h1</h1>
+		  			<p>text</p>
+		  			<a href="#">link</a>
+		  		</div>
+		  		<button id="save">save</button>
+	  		</div>
+	  	</div>
+	</body>
+</html>

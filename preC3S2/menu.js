@@ -143,7 +143,7 @@ $("#removeStyle").click(function(){
 	$(myTemplate).empty();
 	$("#wrapBody [c3s2_fsize='true']").css("font-size", "").attr("c3s2_fsize", false);
 	$("#wrapBody [c3s2_fcolor='true']").css("color", "").attr("c3s2_fcolor", false);
-	$("#wrapBody [c3s2_bcolor='true']").css("background-color", "").attr("c3s2_bcolor", false);
+	$("#wrapBody [c3s2_bcolor='true']").css("background-color", "").removeAttr("data").attr("c3s2_bcolor", false);
 	$("#wrapBody [c3s2_ffamily='true']").css("font-family", "").attr("c3s2_ffamily", false);
 	$("#wrapBody [c3s2_hide='true']").css("display", "").attr("c3s2_hide", false);
 });
@@ -163,9 +163,10 @@ if(tempCSS = window.localStorage.getItem("c3s2Template")){
 var i_style = new Array();
 var i_styleJson = null;
 if(i_styleJson = window.localStorage.getItem("c3s2Style")){
-	console.log("i_styleJson:"+$.type(i_styleJson));
+	console.log("i_styleJson:"+$.type(i_styleJson)+"\n"+i_styleJson);
 	i_style = JSON.parse(i_styleJson);
 }
+//console.log("i_style: "+i_style);
 
 // i_style = JSON.parse(window.localStorage.getItem("c3s2Style"));
 console.log("i_style:"+$.type(i_style));
@@ -211,7 +212,7 @@ var checkSelf = function(elem){
 }
 
 function checkTree(elem, str){
-	var cssStr = str; 
+	var cssStr = str;
 	console.log(cssStr);
 	var parent = $(elem).parent()[0];
 	var index = $(parent).index(elem);
@@ -333,7 +334,7 @@ $('#fontColor').spectrum({
 				console.log(i_style);
 				saveStyle(i_style);
 		    }
-		   
+
 
 		}
     }
@@ -361,6 +362,7 @@ $('#backColor').spectrum({
 		    $(targetElement).find("p").css({'cssText': prevStyle + 'background-color: ' +backColor+' !important;'}).css("border", "");
 		    $(targetElement).css({'cssText': prevStyle + 'background-color: ' +backColor+' !important;'}).css("border", "3px solid #ff0000");
 		    $(targetElement).attr("data", backColor).attr("change", true);
+		    $(targetElement).find("p").attr("data", backColor).attr("change", true);
 		    if($(targetElement).attr("id")){
 		    	var id = $(targetElement).attr("id");
 		    	var bcolor = "\
@@ -387,7 +389,7 @@ var style = '\
 	<style id="fontlist" type="text/css">\n\
 		#fontList .ui-selected { background: #F39814; color: white; }\n\
 		#fontList { margin; 0; padding: 0; width: 15%; list-style: none !important; }\n\
-		#fontList>li { margin: 3px; padding: 0.4em; border: solid 1px #000; list-style: none !important; }\n\
+		#fontList>li { margin: 3px; padding: 0.4em; border: solid 1px #fff; list-style: none !important; }\n\
 	</style>';
 $(style).appendTo('head');
 
@@ -455,6 +457,9 @@ $("#is_hide").click(function(){
 var overT;
 $("#tab_is").click(function(){
     selectable = true;
+    console.log("elemCount: "+$("*").length);
+    console.log("elemCount_#tabs *: "+$("#tabs *").length);
+    console.log("elemCount_#tabs: "+$("#tabs").length);
     if (selectable) {
 	select();
     }
@@ -511,14 +516,36 @@ $("#tab_template, #tab_css").click(function(){
 		background: "",
 		zIndex: ""
     });
-    $("#wrapBody [change='true']").filter(function(){
-    // $("[change='true']").not("#tabs *").filter(function(){
-		$(this).css("backgroundColor") == "#92f"
-	}).css({
-		opacity: "",
-		background: "",
-		zIndex: ""
-	});
+    var data = null;
+	$("#wrapBody [change='true']").each(function(){
+		if(($(this).css("backgroundColor") == "#92f") || ($(this).css("backgroundColor") == "rgb(153, 238, 255)")){
+			console.log($(this));
+			data = $(this).attr("data")
+			$(this).css({
+				opacity: "",
+				background: data,
+				zIndex: ""
+			});
+		}
+	})
+
+ //    $("#wrapBody [change='true']").filter(function(){
+ //    // $("[change='true']").not("#tabs *").filter(function(){
+	// 	$(this).css("backgroundColor") == "#92f"
+	// 	console.log($(this).attr("data"));
+	// 	data = $(this).attr("data")
+	// }).each(function(){
+	// 	console.log($(this));
+	// 	$(this).css({
+	// 		opacity: "",
+	// 		background: data,
+	// 		zIndex: ""
+	// 	});
+	//  }).css({
+	// 	opacity: "",
+	// 	background: data,
+	// 	zIndex: ""
+	// });
 });
 
 //選択する要素の決定
@@ -566,7 +593,14 @@ var saveTemplate = function(Css){
 };
 
 var tempChange = function(back, size, color, link, visit){
-	$("#wrapBody [c3s2_fsize='true']").css("font-size", "");
+	window.localStorage.removeItem("c3s2");
+	$(myStyle).empty();
+	window.localStorage.removeItem("c3s2Style");
+	$("#wrapBody [c3s2_fsize='true']").css("font-size", "").attr("c3s2_fsize", false);
+	$("#wrapBody [c3s2_fcolor='true']").css("color", "").attr("c3s2_fcolor", false);
+	$("#wrapBody [c3s2_bcolor='true']").css("background-color", "").removeAttr("data").attr("c3s2_bcolor", false);
+	$("#wrapBody [c3s2_ffamily='true']").css("font-family", "").attr("c3s2_ffamily", false);
+	$("#wrapBody [c3s2_hide='true']").css("display", "").attr("c3s2_hide", false);
 	var templateCSS = "\
 			 #wrapBody { background-color: "+back+";\n\
 			 			 font-size: "+size+";\n\
@@ -574,6 +608,11 @@ var tempChange = function(back, size, color, link, visit){
 			 			 font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
 			 			}\n\
 			 #wrapBody p { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody td { background-color: "+back+";\n\
 			 			   font-size: "+size+";\n\
 			 			   color: "+color+";\n\
 			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
@@ -601,14 +640,19 @@ var tempChange = function(back, size, color, link, visit){
 			 #wrapBody h1,h2,h3,h4,h5,h6 { font-weight: bold;\n\
 			                               color: "+color+";\n\
 			                           }\n\
-			 #wrapBody a:link { color: "+link+";}\n\
-			 #wrapBody a:visited { color: "+visit+"}\n";
+			 #wrapBody a:link { color: "+link+";\n\
+                          text-decoration: underline;}\n\
+			 #wrapBody a:visited { color: "+visit+"}\n\
+                             text-decoration: underline;}\n";
 	$(myTemplate).empty();
 	$(myTemplate).html(templateCSS);
 	tempCSS = templateCSS;
 	console.log(tempCSS);
 	saveTemplate(tempCSS);
 	$("#wrapBody").find("p").each(function(){
+		$(this).attr("change", true);
+	});
+	$("#wrapBody").find("td").each(function(){
 		$(this).attr("change", true);
 	});
 	$("#wrapBody").find("ul").each(function(){
@@ -629,7 +673,14 @@ var tempChange = function(back, size, color, link, visit){
 }
 
 var tempChangeB7_9 = function(back, size, color){
-	$("#wrapBody [c3s2_fsize='true']").css("font-size", "");
+	window.localStorage.removeItem("c3s2");
+	$(myStyle).empty();
+	window.localStorage.removeItem("c3s2Style");
+	$("#wrapBody [c3s2_fsize='true']").css("font-size", "").attr("c3s2_fsize", false);
+	$("#wrapBody [c3s2_fcolor='true']").css("color", "").attr("c3s2_fcolor", false);
+	$("#wrapBody [c3s2_bcolor='true']").css("background-color", "").removeAttr("data").attr("c3s2_bcolor", false);
+	$("#wrapBody [c3s2_ffamily='true']").css("font-family", "").attr("c3s2_ffamily", false);
+	$("#wrapBody [c3s2_hide='true']").css("display", "").attr("c3s2_hide", false);
 	var templateCSS = "\
 			 #wrapBody { background-color: "+back+";\n\
 			 			 font-size: "+size+";\n\
@@ -637,6 +688,11 @@ var tempChangeB7_9 = function(back, size, color){
 			 			 font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
 			 			}\n\
 			 #wrapBody p { background-color: "+back+";\n\
+			 			   font-size: "+size+";\n\
+			 			   color: "+color+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody td { background-color: "+back+";\n\
 			 			   font-size: "+size+";\n\
 			 			   color: "+color+";\n\
 			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
@@ -663,13 +719,18 @@ var tempChangeB7_9 = function(back, size, color){
 			 			}\n\
 			 #wrapBody h1,h2,h3,h4,h5,h6 { font-weight: bold;\n\
 			                               color: "+color+";\n\
-			                           }\n";
+			                           }\n\
+       #wrapBody a:link { text-decoration: underline;}\n\
+       #wrapBody a:visited { text-decoration: underline;}\n";
 	$(myTemplate).empty();
 	$(myTemplate).html(templateCSS);
 	tempCSS = templateCSS;
 	console.log(tempCSS);
 	saveTemplate(tempCSS);
 	$("#wrapBody").find("p").each(function(){
+		$(this).attr("change", true);
+	});
+	$("#wrapBody").find("td").each(function(){
 		$(this).attr("change", true);
 	});
 	$("#wrapBody").find("ul").each(function(){
@@ -690,12 +751,22 @@ var tempChangeB7_9 = function(back, size, color){
 }
 
 var tempChangeB13_14 = function(size){
-	$("#wrapBody [c3s2_fsize='true']").css("font-size", "");
+	window.localStorage.removeItem("c3s2");
+	$(myStyle).empty();
+	window.localStorage.removeItem("c3s2Style");
+	$("#wrapBody [c3s2_fsize='true']").css("font-size", "").attr("c3s2_fsize", false);
+	$("#wrapBody [c3s2_fcolor='true']").css("color", "").attr("c3s2_fcolor", false);
+	$("#wrapBody [c3s2_bcolor='true']").css("background-color", "").removeAttr("data").attr("c3s2_bcolor", false);
+	$("#wrapBody [c3s2_ffamily='true']").css("font-family", "").attr("c3s2_ffamily", false);
+	$("#wrapBody [c3s2_hide='true']").css("display", "").attr("c3s2_hide", false);
 	var templateCSS = "\
 			 #wrapBody { font-size: "+size+";\n\
 			 			 font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
 			 			}\n\
 			 #wrapBody p { font-size: "+size+";\n\
+			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+			 			}\n\
+			 #wrapBody td { font-size: "+size+";\n\
 			 			   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
 			 			}\n\
 			 #wrapBody ul { font-size: "+size+";\n\
@@ -710,13 +781,18 @@ var tempChangeB13_14 = function(size){
 			 #wrapBody section { font-size: "+size+";\n\
 			 			         font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
 			 			}\n\
-			 #wrapBody h1,h2,h3,h4,h5,h6 { font-weight: bold;}\n";
+			 #wrapBody h1,h2,h3,h4,h5,h6 { font-weight: bold;}\n\
+       #wrapBody a:link { text-decoration: underline;}\n\
+       #wrapBody a:visited { text-decoration: underline;}\n";
 	$(myTemplate).empty();
 	$(myTemplate).html(templateCSS);
 	tempCSS = templateCSS;
 	console.log(tempCSS);
 	saveTemplate(tempCSS);
 	$("#wrapBody").find("p").each(function(){
+		$(this).attr("change", false);
+	});
+	$("#wrapBody").find("td").each(function(){
 		$(this).attr("change", false);
 	});
 	$("#wrapBody").find("ul").each(function(){
@@ -737,15 +813,15 @@ var tempChangeB13_14 = function(size){
 }
 
 $("#b1").click(function() {
-	tempChange("black", "150%", "white", "aqua", "green");
+	tempChange("black", "150%", "white", "HotPink", "green");
 });
 
 $("#b2").click(function(){
-	tempChange("black", "200%", "white", "aqua", "green");
+	tempChange("black", "200%", "white", "HotPink", "green");
 });
 
 $("#b3").click(function(){
-    tempChange("black", "100%", "white", "aqua", "green");
+    tempChange("black", "100%", "white", "HotPink", "green");
 });
 
 $("#b4").click(function(){
@@ -806,12 +882,23 @@ $("#b17").click(function(){
 
 //元に戻す
 $("#list3").click(function(){
+	window.localStorage.removeItem("c3s2");
+	$(myStyle).empty();
+	window.localStorage.removeItem("c3s2Style");
+	$("#wrapBody [c3s2_fsize='true']").css("font-size", "").attr("c3s2_fsize", false);
+	$("#wrapBody [c3s2_fcolor='true']").css("color", "").attr("c3s2_fcolor", false);
+	$("#wrapBody [c3s2_bcolor='true']").css("background-color", "").removeAttr("data").attr("c3s2_bcolor", false);
+	$("#wrapBody [c3s2_ffamily='true']").css("font-family", "").attr("c3s2_ffamily", false);
+	$("#wrapBody [c3s2_hide='true']").css("display", "").attr("c3s2_hide", false);
 	$(myTemplate).empty();
 	tempCSS = "";
 	console.log("reset template");
 	saveTemplate("");
     $("#wrapBody").attr("change", false);
     $("#wrapBody").find("p").each(function(){
+    	$(this).attr("change", false);
+	});
+	$("#wrapBody").find("td").each(function(){
     	$(this).attr("change", false);
 	});
 	$("#wrapBody").find("a").each(function(){
