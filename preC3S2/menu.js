@@ -11,32 +11,32 @@ var c3s2content = $("<div>").attr("class", "container");
 var template= $("<div>").attr("id", "template");
 var c3s2row = $("<div>").attr("class", "row");
 // btn-groupの命名規約 {背景色}{文字色} または {機能}
-var blackWhite = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>背景色黒 文字色白<p>");
-var blackYellow = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>背景色黒 文字色黄<p>");
-var whiteYellow = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>背景色白 文字色黄<p>");
-var blueYellow = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>背景色青 文字色黄<p>");
-var blueWhite = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>背景色青 文字色白<p>");
-var fontsizeChanger = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>フォントサイズの一括変更<p>");
+var blackWhite = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>背景色黒 文字色白<p>").css({color: "#ffaa00", "font-size": "120%"});
+var blackYellow = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>背景色黒 文字色黄<p>").css({color: "#ffaa00", "font-size": "120%"});
+var whiteYellow = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>背景色白 文字色黄<p>").css({color: "#ffaa00", "font-size": "120%"});
+var blueYellow = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>背景色青 文字色黄<p>").css({color: "#ffaa00", "font-size": "120%"});
+var blueWhite = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>背景色青 文字色白<p>").css({color: "#ffaa00", "font-size": "120%"});
+var fontsizeChanger = $("<div class='btn-group btn-group-lg col-md-12 well'>").html("<p>フォントサイズの一括変更<p>").css({color: "#ffaa00", "font-size": "120%"});
 // c3s2row.append("<div id='list1' class='col-md-4 btn btn-primary'>テンプレート１</div>");
 // c3s2row.append("<div id='list2' class='col-md-4 btn btn-primary'>テンプレート2</div>");
 c3s2row.append("<div id='list3' class='col-md-4 btn btn-warning'>元に戻す</div>");
-blackWhite.append("<div id='b1', class='col-md-4 btn btn-primary'>b1</div>");
-blackWhite.append("<div id='b2' class='col-md-4 btn btn-primary'>b2</div>");
-blackWhite.append("<div id='b3' class='col-md-4 btn btn-primary'>b3</div>");
-blackYellow.append("<div id='b4' class='col-md-4 btn btn-primary'>b4</div>");
-blackYellow.append("<div id='b5' class='col-md-4 btn btn-primary'>b5</div>");
-blackYellow.append("<div id='b6' class='col-md-4 btn btn-primary'>b6</div>");
-whiteYellow.append("<div id='b7' class='col-md-4 btn btn-primary'>b7</div>");
-whiteYellow.append("<div id='b8' class='col-md-4 btn btn-primary'>b8</div>");
-whiteYellow.append("<div id='b9' class='col-md-4 btn btn-primary'>b9</div>");
-blueYellow.append("<div id='b10' class='col-md-4 btn btn-primary'>b10</div>");
-blueYellow.append("<div id='b11' class='col-md-4 btn btn-primary'>b11</div>");
-blueYellow.append("<div id='b12' class='col-md-4 btn btn-primary'>b12</div>");
-fontsizeChanger.append("<div id='b13' class='col-md-4 btn btn-primary'>b13</div>");
-fontsizeChanger.append("<div id='b14' class='col-md-4 btn btn-primary'>b14</div>");
-blueWhite.append("<div id='b15' class='col-md-4 btn btn-primary'>b15</div>");
-blueWhite.append("<div id='b16' class='col-md-4 btn btn-primary'>b16</div>");
-blueWhite.append("<div id='b17' class='col-md-4 btn btn-primary'>b17</div>");
+blackWhite.append("<div id='b1', class='col-md-4 btn btn-primary'>150%</div>");
+blackWhite.append("<div id='b2' class='col-md-4 btn btn-primary'>200%</div>");
+blackWhite.append("<div id='b3' class='col-md-4 btn btn-primary'>100%</div>");
+blackYellow.append("<div id='b4' class='col-md-4 btn btn-primary'>150%</div>");
+blackYellow.append("<div id='b5' class='col-md-4 btn btn-primary'>200%</div>");
+blackYellow.append("<div id='b6' class='col-md-4 btn btn-primary'>100%</div>");
+whiteYellow.append("<div id='b7' class='col-md-4 btn btn-primary'>150%</div>");
+whiteYellow.append("<div id='b8' class='col-md-4 btn btn-primary'>200%</div>");
+whiteYellow.append("<div id='b9' class='col-md-4 btn btn-primary'>100%</div>");
+blueYellow.append("<div id='b10' class='col-md-4 btn btn-primary'>150%</div>");
+blueYellow.append("<div id='b11' class='col-md-4 btn btn-primary'>200%</div>");
+blueYellow.append("<div id='b12' class='col-md-4 btn btn-primary'>100%</div>");
+fontsizeChanger.append("<div id='b13' class='col-md-4 btn btn-primary'>150%</div>");
+fontsizeChanger.append("<div id='b14' class='col-md-4 btn btn-primary'>200%</div>");
+blueWhite.append("<div id='b15' class='col-md-4 btn btn-primary'>150%</div>");
+blueWhite.append("<div id='b16' class='col-md-4 btn btn-primary'>200%</div>");
+blueWhite.append("<div id='b17' class='col-md-4 btn btn-primary'>100%</div>");
 c3s2row.append(blackWhite, blackYellow, whiteYellow, blueYellow, blueWhite, fontsizeChanger);
 template.append(c3s2row);
 c3s2content.append(template);
@@ -44,7 +44,7 @@ tabs.append(c3s2content);
 
 //個別設定
 var i_setting= $("<div>").attr("id", "individual_setting");
-i_setting.append("<button id='is_hide'>非表示</button>");
+i_setting.append("<button id='is_hide'>非表示</button>").css("color", "black");
 //i_setting.append("<span>A</span>");
 //var sliderwrap.append("<span>A</span>");
 var slider = $("<div>").attr("id", "slider").css("width", "300px");
@@ -77,11 +77,11 @@ var css_writing= $("<div>").attr("id", "css_writing");
 var inputCSS = $("<div>").attr("id", "editor")
 						 .css({
 						 	width: "90%x",
-						 	height: "40%",
+						 	height: "25%",
 						 	border: "solid thin"
 						 });
 css_writing.append(inputCSS);
-css_writing.append("<button id='writingChange'>change</button>");
+css_writing.append("<button id='writingChange'>change</button>").css("color", "black");
 tabs.append(css_writing);
 
 
@@ -89,6 +89,7 @@ var closeButton= $("<button>").attr("id", "closeMenu")
 			      .css("position", "absolute")
 			      .css("right", "2%")
 			      .css("top","3%")
+            .css("color", "black")
 			      .text("閉じる");
 tabs.append(closeButton);
 
@@ -96,6 +97,7 @@ var removeStyle= $("<button>").attr("id", "removeStyle")
 			      .css("position", "absolute")
 			      .css("right", "8%")
 			      .css("top","3%")
+            .css("color", "black")
 			      .text("reset");
 tabs.append(removeStyle);
 
@@ -193,48 +195,6 @@ var saveStyle = function(array){
 	window.localStorage.setItem("c3s2Style", json);
 	console.log("saved style:\n"+json);
 	console.log($.type(json))
-}
-
-function checkTarget(elem){
-	var index = $("*").index(elem);
-	var cssStr = ":root:nth-child("+index+")";
-	return cssStr;
-}
-
-var checkSelf = function(elem){
-	var parent = $(elem).parent();
-	var index = $("*").index(elem);
-	console.log("index: "+index+"\n");
-	console.log($("*:eq("+index+")"));
-	var cssStr
-	//var cssStr = ":nth-child("+index+")";
-	return cssStr;
-}
-
-function checkTree(elem, str){
-	var cssStr = str;
-	console.log(cssStr);
-	var parent = $(elem).parent()[0];
-	var index = $(parent).index(elem);
-	if($(parent).attr("id")){
-		console.log("id\n"+$(elem).get(0).id);
-		cssStr = $(parent).attr("id")+" "+cssStr;
-		return cssStr;
-	}
-	// else if($(parent).attr("tagName") == ("body" || "BODY")){
-	// 	cssStr = "body "+cssStr;
-	// 	return cssStr;
-	// }
-	else{
-		if(cssStr == ""){
-			console.log("tagName\n"+$(elem).get(0).nodeName);
-			cssStr = cssStr+$(elem).get(0).tagName;
-		}else{
-			console.log("else\n"+$(elem).get(0).tagName);
-			cssStr = cssStr+" "+$(elem).get(0).tagName;
-		}
-		checkTree(parent, cssStr);
-	}
 }
 
 //JQuery UI tabsウィジェット
@@ -389,7 +349,7 @@ var style = '\
 	<style id="fontlist" type="text/css">\n\
 		#fontList .ui-selected { background: #F39814; color: white; }\n\
 		#fontList { margin; 0; padding: 0; width: 15%; list-style: none !important; }\n\
-		#fontList>li { margin: 3px; padding: 0.4em; border: solid 1px #fff; list-style: none !important; }\n\
+		#fontList>li { margin: 3px; padding: 0.4em; border: solid 1px #fff; color: white; list-style: none !important; }\n\
 	</style>';
 $(style).appendTo('head');
 
@@ -451,7 +411,6 @@ $("#is_hide").click(function(){
 		}
     }
 });
-
 
 //要素の選択
 var overT;
@@ -565,7 +524,7 @@ $("#wrapBody").click(function(event){
 			//$(targetElement).css({'cssText': prevStyle + 'border: 3px solid #ff0000 !important;'});
 			$(targetElement).css("border", "3px solid #ff0000");
 			elementSelected = true;
-			//selectable = false;
+			selectable = false;
 			$("#wrapBody [change!='true']").css({
 			// $("[change!='true']").not("#tabs *").css({
 			    opacity: "",
@@ -920,61 +879,3 @@ $("#list3").click(function(){
 		$(this).attr("change", false);
 	});
 });
-
-// $("#b1").click(function(){
-//     prevStyle = $("#wrapBody").attr('style');
-//     $("#wrapBody").css({
-// 	'cssText': prevStyle +";"+
-// 	templateBan.backBlack +
-// 	templateBan.fontSize150 +
-// 	templateBan.colorWhite+
-// 	templateBan.fontFamily
-
-//     }).attr("change", true);
-//     $("#wrapBody").find("p").each(function(){
-// 	prevStyle = $(this).attr("style")
-// 	$(this).css({'cssText': prevStyle +";"+
-// 	    templateBan.backBlack +
-// 	    templateBan.fontSize150 +
-// 	    templateBan.colorWhite +
-// 	    templateBan.fontFamily
-// 	}).attr("change", true);
-//     })
-//     $("#wrapBody").find("ul").each(function(){
-// 	prevStyle = $(this).attr("style")
-// 	$(this).css({'cssText': prevStyle +";"+
-// 	    templateBan.backBlack +
-// 	    templateBan.fontSize150 +
-// 	    templateBan.colorWhite +
-// 	    templateBan.fontFamily
-// 	}).attr("change", true);
-//     })
-//     $(":header").each(function(){
-// 	prevStyle = $(this).attr("style")
-// 	$(this).css({'cssText': prevStyle +";"+
-// 	    templateBan.fontWeight +
-// 	    templateBan.backBlack +
-// 	    templateBan.fontSize150 +
-// 	    templateBan.colorWhite +
-// 	    templateBan.fontFamily
-// 	}).attr("change", true);
-//     })
-//     $("#wrapBody").find("table").each(function(){
-// 	prevStyle = $(this).attr("style")
-// 	$(this).css({'cssText': prevStyle +";"+
-// 	    templateBan.backBlack +
-// 	    templateBan.fontSize150 +
-// 	    templateBan.colorWhite +
-// 	    templateBan.fontFamily
-// 	}).attr("change", true);
-//     })
-//     $("#wrapBody").find("section").each(function(){
-// 	prevStyle = $(this).attr("style")
-// 	$(this).css({'cssText': prevStyle +";"+
-// 	    templateBan.backBlack +
-// 	    templateBan.fontSize150 +
-// 	    templateBan.colorWhite +
-// 	    templateBan.fontFamily
-// 	}).attr("change", true);
-//     })
-// });

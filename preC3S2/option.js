@@ -98,8 +98,7 @@ $(function() {
     console.log("reset template");
     save("");
   });
-
- });
+});
 
 var save = function(Css){
   var option = {
@@ -207,7 +206,7 @@ var tempChangeB7_9 = function(back, size, color){
   $(template).html(templateCSS);
   console.log(templateCSS);
   save(templateCSS);
-}
+};
 
 var tempChangeB13_14 = function(size){
   var templateCSS = "\
@@ -230,13 +229,13 @@ var tempChangeB13_14 = function(size){
                    font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
             }\n\
        #wrapBody section { font-size: "+size+";\n\
-                     font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
+                   font-family: ヒラギノ角ゴ Pro W3 メイリオ;\n\
             }\n\
-       #wrapBody h1,h2,h3,h4,h5,h6 { font-weight: bold;}\n
+       #wrapBody h1,h2,h3,h4,h5,h6 { font-weight: bold;}\n\
        #wrapBody a:link { text-decoration: underline;}\n\
        #wrapBody a:visited { text-decoration: underline;}\n";
   $(template).empty();
   $(template).html(templateCSS);
   console.log(templateCSS);
   save(templateCSS);
-}
+};
