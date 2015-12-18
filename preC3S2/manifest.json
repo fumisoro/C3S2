@@ -1,9 +1,9 @@
 {
-    "name": "PreC3S2",
-    "version": "0.1",
+    "name": "C3S2",
+    "version": "1.0",
     "manifest_version": 2,
 
-    "description": "C3S2の試作",
+    "description": "webページのレイアウト・デザインを一括・個別で変更。CSSの記述をページに適用させる。",
 
     "permissions": [
         "tabs",
@@ -14,7 +14,7 @@
 
     "browser_action": {
         "default_icon": "C3S2logo.png",
-        "default_title": "PreC3S2"
+        "default_title": "C3S2"
     },
 
     "background": {
