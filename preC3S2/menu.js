@@ -222,6 +222,7 @@ $('#slider').slider({
     },
     change: function(e, ui){//スライダーの操作が終了したときに変更をローカルストレージへ保存
     	if (elementSelected) {
+        $(targetElement).attr("c3s2_fsize", true)
 		    if($(targetElement).attr("id")){
 		    	var fsize = '#'+$(targetElement).attr("id")+' { font-size: '+ui.value+'px; }\n';
 				$(myStyle).html($(myStyle).html() + fsize);
@@ -268,17 +269,17 @@ $('#fontColor').spectrum({
 		    prevStyle = $(targetElement).attr('style');
 		    $(targetElement).css({'cssText': prevStyle + 'color: ' +fontColor+' !important;'});
 		    $(targetElement).find("p").css({'cssText': prevStyle + 'color: ' +fontColor+' !important;'});
-		    $(targetElement).find("p").css("border", "");
-		    $(targetElement).css("border", "3px solid #ff0000");
+		    $(targetElement).find("p").css("border", "").attr("c3s2_fcolor", true);
+		    $(targetElement).css("border", "3px solid #ff0000").attr("c3s2_fcolor", true);
 		    if($(targetElement).attr("id")){
 		    	var id = $(targetElement).attr("id")
 		    	var fcolor = "\
 		    		#"+id+" {color: "+fontColor+";}\n\
 		    		#"+id+" p {color: "+fontColor+";}\n"
 		    	$(myStyle).html($(myStyle).html() + fcolor);
-				css = css + fcolor;
-				console.log(css);
-				save(css);
+  				css = css + fcolor;
+  				console.log(css);
+  				save(css);
 		    }else{
 		  //   	var fcolor = "\
 		  //   		"+checkTarget(targetElement)+" { color: "+fontColor+"; }\n\
@@ -321,8 +322,8 @@ $('#backColor').spectrum({
 		    prevStyle = $(targetElement).attr('style');
 		    $(targetElement).find("p").css({'cssText': prevStyle + 'background-color: ' +backColor+' !important;'}).css("border", "");
 		    $(targetElement).css({'cssText': prevStyle + 'background-color: ' +backColor+' !important;'}).css("border", "3px solid #ff0000");
-		    $(targetElement).attr("data", backColor).attr("change", true);
-		    $(targetElement).find("p").attr("data", backColor).attr("change", true);
+		    $(targetElement).attr("data", backColor).attr("change", true).attr("c3s2_bcolor", true);
+		    $(targetElement).find("p").attr("data", backColor).attr("change", true).attr("c3s2_bcolor", true);
 		    if($(targetElement).attr("id")){
 		    	var id = $(targetElement).attr("id");
 		    	var bcolor = "\
@@ -364,6 +365,7 @@ $('#fontList').selectable({
 		    prevStyle = $(targetElement).attr('style');
 		    //$(targetElement).css({'cssText':'font-family'+ $('.ui-selected').css("font-family") +'!important;'});
 		    $(targetElement).css({'cssText': prevStyle + 'font-family: ' +$('.ui-selected').css("font-family")+' !important;'});
+        $(targetElement).attr("c3s2_ffamily", true)
 		    if($(targetElement).attr("id")){
 				var id = $(targetElement).attr("id");
 		    	var ffamily = "#"+id+" {font-family: "+$('.ui-selected').css("font-family")+";}\n";
@@ -394,6 +396,7 @@ $("#is_hide").click(function(){
     if (elementSelected) {
 		prevStyle = $(targetElement).attr('style');
 		$(targetElement).css({'cssText': prevStyle + 'display: none !important;'});
+    $(targetElement).attr("c3s2_hide", true)
 		if($(targetElement).attr("id")){
 			var id = $(targetElement).attr("id");
 	    	var hide = "#"+id+" {display: none;}\n";
@@ -524,7 +527,7 @@ $("#wrapBody").click(function(event){
 			//$(targetElement).css({'cssText': prevStyle + 'border: 3px solid #ff0000 !important;'});
 			$(targetElement).css("border", "3px solid #ff0000");
 			elementSelected = true;
-			selectable = false;
+			//selectable = false;
 			$("#wrapBody [change!='true']").css({
 			// $("[change!='true']").not("#tabs *").css({
 			    opacity: "",

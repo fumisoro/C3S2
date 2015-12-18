@@ -5,8 +5,8 @@ $(function(){
 	var savedStyle = null;
 	myStyle = $("<style id='myStyle' 'type='text/css'>");
 	myTemplate = $("<style id='myTemplate' type='text/css'>");
-	$("head").append(myStyle);
 	$("head").append(myTemplate);
+	$("head").append(myStyle);
 	var option = null;
 	chrome.storage.local.get("c3s2Option", function(result){
   	console.log(result.c3s2Option);
